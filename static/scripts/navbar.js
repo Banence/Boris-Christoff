@@ -6,3 +6,5 @@ burgerIconElement.addEventListener('click', function () {
     navbarMobileElement.classList.toggle("visible");
     burgerSvgElement.classList.toggle("open");
 });
+
+

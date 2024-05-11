@@ -73,9 +73,9 @@
     transition: width 0.3s ease;
     overflow: hidden;
     position: absolute;
-    top: 0;
+    top: 7.2rem;
     right: 0;
-    background-color: blue;
+    background-color: #0E121D;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -198,22 +198,28 @@ a.dropdown-start {
 
     .nav-mobile-container.visible {
         opacity: 1;
-        width: 25rem;
+        width: 30rem;
         height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
-    .nav-item-m {
+    .nav-item-m a{
         font-size: 1.5rem;
+        color: white;
     }
 }
 
 @media (max-width: 36rem) {
     .nav-mobile-container.visible {
-        width: 14rem;
+        width: 100%;
     }
+
+    .nav-mobile-container {
+        top: 6rem;
+    }
+    
 
     .nav-item-m {
         font-size: 1rem;

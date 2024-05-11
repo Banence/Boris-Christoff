@@ -63,6 +63,12 @@
     object-position: bottom;
 }
 
+@media (max-width: 87.5rem) {
+    .slide > img {
+        height: 30rem;
+    }
+}
+
 @media (max-width: 62rem) {
     .carousel {
         display: none;

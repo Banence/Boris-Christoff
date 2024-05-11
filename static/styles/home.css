@@ -62,3 +62,9 @@
     object-fit: cover;
     object-position: bottom;
 }
+
+@media (max-width: 62rem) {
+    .carousel {
+        display: none;
+    }
+}

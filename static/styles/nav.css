@@ -160,17 +160,16 @@ a.dropdown-start {
     margin: 0;
 }
 
-@media (max-width: 62rem) {
-    .nav-item a {
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 48rem) {
+@media (max-width: 65rem) {
     .logo-container img {
-        width: 7rem;
+        width: 15rem;
         height: 3.5rem;
-        margin-left: 1rem;
+    }
+
+    #boris-head {
+        width: 4rem;
+        height: 6rem;
+        margin-left: 2rem;
     }
 
     .nav-container { 
@@ -218,5 +217,16 @@ a.dropdown-start {
 
     .nav-item-m {
         font-size: 1rem;
+    }
+
+    .logo-container img {
+        width: 11rem;
+        height: 3.5rem;
+    }
+
+    #boris-head {
+        width: 2.5rem;
+        height: 5rem;
+        margin-left: 2.5rem;
     }
 }

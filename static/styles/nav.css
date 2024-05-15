@@ -28,7 +28,7 @@
     font-size: 0;
     position: sticky;
     z-index: 1;
-    background-color: #0E121D;
+    background-color: var(--color-primary-bg);
     border-bottom: solid 2px white;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .nav-item a:hover {
-    color: rgb(118, 118, 118);
+    color: var(--color-hover-secondary);
 }
 
 .burger-icon-container { 
@@ -75,7 +75,7 @@
     position: absolute;
     top: 7.2rem;
     right: 0;
-    background-color: #0E121D;
+    background-color: var(--color-primary-bg);
     list-style: none;
     padding: 0;
     margin: 0;
@@ -136,7 +136,7 @@
 }
 
 .dropdown-item a:hover {
-    color: rgb(118, 118, 118);
+    color: var(--color-hover-secondary);
 }
 
 a.dropdown-start {

@@ -6,5 +6,23 @@ body {
 
 html {
     --color-primary-bg: #0E121D;
-    --color-hover-secondary: rgb(118, 118, 118);
+    --color-hover-secondary: #f5494c;
+}
+
+@keyframes regainColor {
+    0% {
+      filter: grayscale(100%);
+    }
+    100% {
+      filter: grayscale(0%);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
 }

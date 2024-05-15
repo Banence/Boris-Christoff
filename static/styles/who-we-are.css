@@ -1,0 +1,107 @@
+.header-img-container img {
+    animation: regainColor 2s ease-in-out;
+}
+  
+.header-img-container h1 {
+    animation: fadeIn 2s ease-in-out;
+}
+
+
+.header-img-container img {
+    width: 100%;
+    height: 32rem;
+    object-fit: cover;
+    object-position: top;
+}
+
+.header-img-container {
+    position: relative;
+}
+
+.header-img-container h1 {
+    position: absolute;
+    top: 13rem;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 4.5rem;
+}
+
+#mission-vision {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 5rem;
+}
+
+#mission-vision li {
+    width: 35rem;
+    height: 20rem;
+    margin: 0 3rem;
+}
+
+#mission-vision h1 {
+    font-size: 3rem;
+    font-style: italic;
+    color: var(--color-primary-bg);
+}
+
+#mission-vision p {
+    font-size: 1.2rem;
+    line-height: 2rem;
+    font-style: italic;
+}
+
+#musical-line {
+    width: 60rem;
+    height: 17rem;
+}
+
+.our-story-container {
+    width: 80%;
+    margin: auto;
+}
+
+.our-story-container h1 {
+    font-size: 3rem;
+    font-style: italic;
+    color: var(--color-primary-bg);
+}
+
+.our-story-container p {
+    font-size: 1.2rem;
+    line-height: 2rem;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.more-info-container {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.more-info-container li {
+    width: 40rem;
+    font-size: 1.15rem;
+    line-height: 2rem;
+    font-style: italic;
+    border: 2px solid var(--color-primary-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    transition: transform 0.5s ease;
+}
+
+.more-info-container li:nth-child(2) {
+    margin: 0 4rem;
+}
+
+.more-info-container li:hover {
+    transform: scale(1.05);
+}

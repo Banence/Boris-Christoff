@@ -46,6 +46,7 @@
 .nav-item a {
     text-decoration: none;
     font-size: 1rem;
+    font-weight: bold;
     color: white;
     margin: 0.6rem;
     transition: color 0.3s ease-out;
@@ -132,7 +133,7 @@
 }
 
 .dropdown-item a {
-    color: #0E121D;
+    color: var(--color-primary-bg);
 }
 
 .dropdown-item a:hover {

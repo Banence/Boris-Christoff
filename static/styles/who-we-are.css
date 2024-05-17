@@ -1,30 +1,23 @@
 .header-img-container img {
     animation: regainColor 2s ease-in-out;
-}
-  
-.header-img-container h1 {
-    animation: fadeIn 2s ease-in-out;
-}
-
-
-.header-img-container img {
     width: 100%;
     height: 32rem;
     object-fit: cover;
     object-position: top;
 }
-
-.header-img-container {
-    position: relative;
-}
-
+  
 .header-img-container h1 {
+    animation: fade 2s ease-in-out;
     position: absolute;
     top: 13rem;
     left: 70%;
     transform: translate(-50%, -50%);
     color: white;
     font-size: 4.5rem;
+}
+
+.header-img-container {
+    position: relative;
 }
 
 #mission-vision {
@@ -98,10 +91,165 @@
     transition: transform 0.5s ease;
 }
 
-.more-info-container li:nth-child(2) {
-    margin: 0 4rem;
+.more-info-container .li-diff {
+    margin-left: 3rem;
 }
 
 .more-info-container li:hover {
     transform: scale(1.05);
+}
+
+.ul-column-container {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2.8rem;
+    padding: 0;
+}
+
+.ul-column-container li {
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 1540px) {
+    .more-info-container li {
+        width: 30rem;
+    }
+}
+
+@media (max-width: 1232px) {
+    .more-info-container {
+        flex-direction: column;
+    }
+
+    .more-info-container .li-diff {
+        margin-left: 0;
+    }
+
+    #musical-line {
+        width: 48rem;
+        height: 15rem;
+    }
+
+    #mission-vision h1 {
+        font-size: 2.5rem;
+    }
+
+    #mission-vision p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 976px) {
+    .header-img-container h1 {
+        font-size: 3.5rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    #mission-vision {
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
+    #mission-vision li {
+        width: 40rem;
+        margin: 0;
+        text-align: center;
+    }
+
+    #mission-vision h1 {
+        font-size: 3rem;
+    }
+
+    #mission-vision p {
+        font-size: 1rem;
+    }
+
+    #musical-line {
+        width: 42rem;
+        height: 12rem;
+    }
+
+    .more-info-container li {
+        width: 100%;
+        margin: 1rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    #musical-line {
+        width: 100%;
+        height: auto;
+    }
+
+    #mission-vision li{
+        width: 30rem;
+    }
+
+    .header-img-container img{
+        height: 25rem;
+    }
+
+    .header-img-container h1 {
+        font-size: 2.5rem;
+    }
+
+    .more-info-container li {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-img-container h1 {
+        font-size: 2rem;
+    }
+
+    .header-img-container img {
+        height: 20rem;
+    }
+
+    #mission-vision li {
+        width: 25rem;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .header-img-container h1 {
+        font-size: 2rem;
+    }
+
+    .header-img-container img {
+        height: 18rem;
+    }
+
+    #mission-vision li {
+        width: 20rem;
+    }
+
+    #mission-vision h1 {
+        font-size: 2rem;
+    }
+
+    #mission-vision p {
+        font-size: 0.8rem;
+    }
+
+    .our-story-container h1 {
+        font-size: 2rem;
+    }
+
+    .our-story-container p {
+        font-size: 1rem;
+    }
+
+    .more-info-container li {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
 }

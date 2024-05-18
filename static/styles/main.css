@@ -85,7 +85,7 @@ html {
 
 .slide-in-right {
   opacity: 0;
-  transform: translateX(100%);
+  transform: translateX(50%);
   transition: opacity 1s, transform 1s;
 }
 

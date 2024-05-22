@@ -291,3 +291,16 @@ a.dropdown-start {
         margin-left: 2.5rem;
     }
 }
+
+@media (max-width: 22rem) {
+    #boris-head {
+        width: 2rem;
+        height: 4rem;
+        margin-left: 2rem;
+    }
+
+    .logo-container img {
+        width: 9rem;
+        height: 2.5rem;
+    }
+}

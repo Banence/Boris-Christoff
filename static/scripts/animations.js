@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+    const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .fade');
   
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {

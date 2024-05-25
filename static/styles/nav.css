@@ -27,9 +27,15 @@
     margin: 0;
     font-size: 0;
     position: sticky;
+    top: 0;
     z-index: 1;
     background-color: var(--color-primary-bg);
     border-bottom: solid 2px white;
+    transition: top 0.7s ease;
+}
+
+.nav-container.hidden {
+    top: -10rem; 
 }
 
 .link-container {
@@ -253,7 +259,7 @@ a.dropdown-start {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        margin-top: 0.6rem;
+        margin-top: 0.65rem;
     }
 
     .nav-item-m a {
@@ -269,6 +275,7 @@ a.dropdown-start {
 @media (max-width: 36rem) {
     .nav-mobile-container.visible {
         width: 100%;
+        margin-top: 0.45rem;
     }
 
     .nav-mobile-container {
@@ -302,5 +309,11 @@ a.dropdown-start {
     .logo-container img {
         width: 9rem;
         height: 2.5rem;
+    }
+
+    .nav-mobile-container.visible {
+        width: 100%;
+        top: 5.45rem;
+        margin-top: 0;
     }
 }

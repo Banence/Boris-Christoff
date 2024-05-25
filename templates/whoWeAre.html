@@ -2,12 +2,13 @@
 <link rel="stylesheet" href="/static/styles/who-we-are.css">
 <script src="/static/scripts/animations.js" defer></script>
 <script src="/static/scripts/who-we-are.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js" defer></script>
 <title>{{ Title }}</title>
 </head>
 <body>
     {% include '/includes/navbar.html' %}
     <div class="header-img-container">
-        <img src="/static/images/sportvsaggressionBG.png" alt="header img">
+        <img class="thumbnail" src="/static/images/sportvsaggressionBG.png" alt="header img">
         <h1>Boris Christoff Foundation</h1>
     </div>
     <ul id="mission-vision">
@@ -40,7 +41,7 @@
     </div>
     <img id="musical-line" class="fade-in" src="/static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
     <h1 id="m-t-header-text" class="fade-in">Management And Team</h1>
-    <ul class="m-t-container">
+    <ul class="m-t-container" id="management-and-team">
       <li class="m-t-item slide-in-left">
           <img src="/static/images/boykopfp.png" alt="BZ">
           <p class="name">Boiko Tsvetanov</p>
@@ -61,8 +62,8 @@
           "Stoyan Bonchev was born in Sofia. He received his basic education at the 133rd school - the Russian Language High School &quot;A.S. Pushkin&quot; After that, 
           he continued his education at the First English Language High School &quot;William Shakespeare&quot; - Sofia, graduating with honors in 1995. In the same year, he completed a language specialization in English at ELS - London.
           In 2002, Stoyan Bonchev graduated from the University of National and World Economy (UNWS) with a Masters degree and a major in International Economic Relations (IEO). During his studies, he also completed a one-year specialization (Handelswissenschaft) at the Vienna University of Economics (Wirtschaftsuniversität Wien). In 2009, he graduated from the New Bulgarian University (NBU) with a Masters degree in classical singing in the class of the world-renowned opera prima Maestra Hristina Angelakova. During and after his studies, he conducted several specializations in opera singing in Zurich under the guidance of the soloist of Opera Zurich and world-famous Bulgarian tenor Maestro Boyko Tsvetanov. He is actively involved in sports, 
-          in 1992 he won a gold medal at the &quot;Young Lions&quot; open tae kwon do tournament for juniors up to 16 years of age, in 2000 he was a bronze medalist, in 2001 - a silver medalist of the Republican Championship in 
-          leg lifting. He speaks English, Russian and German.">Read more
+          in 1992 he won a gold medal at the &quot;Young Lions&quot; open tae kwon do tournament for juniors up to 16 years of age, in 2000 he was a bronze medalist, in 2001 - a silver medalist of the Republican Championship in leg lifting. 
+          He speaks English, Russian and German.">Read more
           </a>
       </li>
       <li class="m-t-item slide-in-right">
@@ -100,5 +101,67 @@
     </div>
   
     <img id="musical-line" class="fade-in" src="/static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
+
+    <h1 id="m-t-header-text" class="fade-in">Artists</h1>
+    <ul class="m-t-container" id="artists">
+        <li class="m-t-item slide-in-left">
+            <img src="/static/images/boykopfp.png" alt="BZ">
+            <p class="name-a">Boiko Tsvetanov</p>
+            <a style="cursor: pointer;" class="read-more-a" 
+            data-modal-content=
+            "Boyko Tsvetanov is one of the greatest and most successful Bulgarian tenors of all time. He is the first, most famous and beloved student of BORIS HRISTOV.">
+            Read more
+          </a>
+        </li>
+        <li class="m-t-item slide-in-right">
+            <img src="/static/images/stoyanpfp.jpeg" alt="SB">
+            <p class="name-a">Stoyan Bonchev</p>
+            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
+            "Stoyan Bonchev is an opera bass and chairman of the Boris Hristov Foundation. His repertoire is extremely rich and includes both operatic arias and classical works, as well as melodic evergreens, folk songs and author's music. He participated in over 500 concerts in more than 15 countries. Stoyan Bonchev has a master's degree in opera singing from the class of our great opera prima Hristina Angelakova, after which he specialized in Zurich with Maestro Boyko Tsvetanov.">Read more
+            </a>
+        </li>
+        <li class="m-t-item slide-in-left">
+            <img src="/static/images/alexpfp.jpg" alt="AZ">
+            <p class="name-a">Alex Zografov</p>
+            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
+            "Maestro Alex Zografov is one of the great pianists, composers and arrangers of our time. Maestro Zografov holds a PhD in composition from the University of Los Angeles and has worked for decades at the highest level with mega stars such as George Benson, Janet Jackson, Andrew Lloyd Webber, Joe Cocker, Nana Muscouri, Georgius Dalaras, Frank Zappa and many others. Maestro Zografov is the artistic director of the Boris Hristov Foundation">
+            Read more
+            </a>
+        </li>
+        <li class="m-t-item slide-in-right">
+            <img src="/static/images/krumpfp.jpeg" alt="KG">
+            <p class="name-a">Krum Galabov</p>
+            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
+            "Krum Galabov is a baritone with over 20 years of successful career on international opera stages. He graduated in music in Vienna and has in his repertoire over 30 central opera parts, as well as hundreds of songs, romances and canzonets. Krum Galabov is also the founder of the Omega Music Management Agency, which is a partner of the Boris Hristov Foundation.">
+            Read more
+            </a>
+        </li>
+        <li class="m-t-item slide-in-left">
+            <img src="/static/images/Borispfp.jpeg" alt="BL">
+            <p class="name-a">Boris Lukov</p>
+            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
+            "Boris Lukov is a Bulgarian tenor - a long-time soloist of the Ruse State Opera, as well as a guest soloist at almost all opera houses in Bulgaria. His repertoire is extremely rich and includes both operatic arias and parts, as well as world-famous evangelical, Russian songs and Italian canzonets.">
+            Read more
+            </a>
+        </li>
+        <li class="m-t-item slide-in-right">
+            <img src="/static/images/albenapfp.jpeg" alt="BL">
+            <p class="name-a">Albena Veskova</p>
+            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
+            "Albena Veskova is among the greatest Bulgarian folk singers of the last 20 years. Graduate of &quot;Shiroka Laka&quot;, soloist of the Mysteries of Bulgarian Voices, soloist of the ensemble Bulgare, long-time TV presenter, soloist of &quot;Painer&quot; - one of the most beautiful and recognizable voices in our folk music.">
+            Read more
+            </a>
+        </li>
+        <li class="m-t-item slide-in-left">
+            <img src="/static/images/a&tpfp.jpeg" alt="AT">
+            <p class="name-a">Anastasia and Teodora</p>
+            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
+            "Anastasia Balabanova and Teodora Zaneva are a young duo who are yet to develop their full potential. Former graduates of radio choirs, they are extremely musical and have wonderful vocal abilities. They have a wide repertoire of pop, rock, pop and stylized folk songs.">
+            Read more
+            </a>
+        </li>
+      </ul>
+
+      <img id="musical-line" class="fade-in" src="/static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
 </body>
 </html>

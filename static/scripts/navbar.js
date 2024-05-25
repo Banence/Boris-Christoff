@@ -45,6 +45,23 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+let lastScrollTop = 0;
+const navbar = document.querySelector('.nav-container');
+
+window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+        navbar.classList.add('hidden');
+    } else {
+        navbar.classList.remove('hidden');
+    }
+
+    lastScrollTop = Math.max(scrollTop, 0); 
+});
+
+
+
 
 
 

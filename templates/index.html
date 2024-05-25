@@ -1,6 +1,7 @@
 {% include '/includes/head.html' %}
 <link rel="stylesheet" href="/static/styles/home.css">
 <script src="/static/scripts/home.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js" defer></script>
 <title>{{ Title }}</title>
 </head>
 <body>
@@ -19,7 +20,7 @@
         </button>
         <ul data-slides>
           <li class="slide" data-active>
-            <img src="/static/images/borischristoffcoverscaled.png" alt="Nature Image #1">
+            <img class="thumbnail" src="/static/images/borischristoffcoverscaled.png" alt="Nature Image #1">
           </li>
           <li class="slide">
             <img src="https://source.unsplash.com/eOpewngf68w" alt="Nature Image #2">

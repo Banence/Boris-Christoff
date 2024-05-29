@@ -40,7 +40,7 @@ html {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -50,7 +50,7 @@ html {
 
 .fade-in {
   opacity: 0; 
-  transform: translateY(20px);
+  transform: translateY(30px);
   transition: opacity 1s, transform 1s;
 }
 
@@ -91,7 +91,7 @@ html {
 .slide-in-left {
   opacity: 0;
   transform: translateX(-50%);
-  transition: opacity 1s, transform 1s;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
 }
 
 .slide-in-left.visible {
@@ -102,7 +102,7 @@ html {
 @keyframes slideInRight {
   from {
     opacity: 0;
-    transform: translateX(50%); 
+    transform: translateX(30%); 
   }
   to {
     opacity: 1;
@@ -112,8 +112,8 @@ html {
 
 .slide-in-right {
   opacity: 0;
-  transform: translateX(50%);
-  transition: opacity 1s, transform 1s;
+  transform: translateX(30%);
+  transition: opacity 1s ease, transform 1s ease;
 }
 
 .slide-in-right.visible {

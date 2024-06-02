@@ -90,8 +90,8 @@ html {
 
 .slide-in-left {
   opacity: 0;
-  transform: translateX(-50%);
-  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+  transform: translateX(-100%);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .slide-in-left.visible {
@@ -99,25 +99,63 @@ html {
   transform: translateX(0);
 }
 
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30%); 
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.btn {
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #007bff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.slide-in-right {
-  opacity: 0;
-  transform: translateX(30%);
-  transition: opacity 1s ease, transform 1s ease;
+.btn:hover {
+  background-color: #0056b3;
 }
 
-.slide-in-right.visible {
-  opacity: 1;
-  transform: translateX(0);
+.btn:active {
+  background-color: #004085;
 }
 
+.file-input {
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 1em;
+  cursor: pointer;
+  color: #666;
+  background-color: #f8f8f8;
+}
+
+.file-input:hover {
+  border-color: #bbb;
+}
+
+.file-input:focus {
+  border-color: #66afe9;
+  outline: none;
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.input-primary {
+  border: 1px solid #007bff;
+  padding: .5em;
+  font-size: 1em;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 1em;
+  background-color: #f8f9fa;
+  color: #495057;
+}
+
+.input-primary:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+}

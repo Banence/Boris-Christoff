@@ -1,16 +1,21 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import FileField, StringField, PasswordField, SubmitField
+from werkzeug.utils import secure_filename
+import os
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['UPLOAD_FOLDER'] = 'static/files'
 app.config['SECRET_KEY'] = 'admin1234'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+csrf = CSRFProtect(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -26,82 +31,81 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     admin = db.Column(db.Integer, nullable=False, default=0)  # Default to 0 for non-admin users
 
+class UploadFileForm(FlaskForm):
+    file = FileField("File", validators=[InputRequired()], render_kw={"class": "file-input"})
+    submit = SubmitField("Upload File", render_kw={"class": "btn"})
+
 class RegisterForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Username"})
-    
-    password = PasswordField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Password"})  # Fixed typo
-    
-    submit = SubmitField("Register")
+    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username", "class": "input-primary"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password", "class": "input-primary"})
+    submit = SubmitField("Register", render_kw={"class": "btn"})
 
     def validate_username(self, username):
-        existing_user_username = User.query.filter_by(
-            username=username.data).first()
-
+        existing_user_username = User.query.filter_by(username=username.data).first()
         if existing_user_username:
-            raise ValidationError(
-                "That username already exists. Please choose a different one.")
-        
+            raise ValidationError("That username already exists. Please choose a different one.")
+
 class LoginForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Username"})
-    
-    password = PasswordField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder": "Password"})  # Fixed typo
-    
-    submit = SubmitField("Login")
+    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username", "class": "input-primary"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password", "class": "input-primary"})
+    submit = SubmitField("Login", render_kw={"class": "btn"})
 
 @app.route('/', methods=["GET"])
 def getIndex():
-    return render_template('index.html', Title="Home"), 200  # Changed to 200
+    return render_template('index.html', Title="Home")
 
 @app.route('/who-we-are', methods=["GET"])
 def getManagementAndTeam():
-    return render_template('whoWeAre.html', Title="Who We Are"), 200  # Changed to 200
+    return render_template('whoWeAre.html', Title="Who We Are")
 
 @app.route('/partners', methods=["GET"])
 def getPartners():
-    return render_template('partners.html', Title="Partners"), 200  # Changed to 200
+    return render_template('partners.html', Title="Partners")
 
 @app.route('/login', methods=["GET", "POST"])
 def getLogin():
     form = LoginForm()
-
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-            return redirect('/admin_dashboard')
-
-    return render_template('login.html', form=form), 200  # Changed to 200
+            return redirect(url_for('admin_dashboard'))
+    return render_template('login.html', form=form, Title="Admin Login")
 
 @app.route('/admin_dashboard', methods=["GET", "POST"])
 @login_required
 def admin_dashboard():
     if current_user.admin == 1:
-        return render_template('admin.html', user=current_user), 200  # Changed to 200
+        form = UploadFileForm()
+        if form.validate_on_submit():
+            file = form.file.data
+            
+            # Ensure the upload folder exists
+            if not os.path.exists(app.config['UPLOAD_FOLDER']):
+                os.makedirs(app.config['UPLOAD_FOLDER'])
+            
+            # Save the file
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+        return render_template('admin.html', user=current_user, form=form, Title="Admin Dashboard")
     else:
-        return render_template('/includes/404.html'), 404
+        return render_template('includes/404.html'), 404
 
 @app.route('/logout', methods=["GET", "POST"])
 @login_required
 def logout():
     logout_user()
-    return redirect('/login')
+    return redirect(url_for('getLogin'))
 
 @app.route('/register', methods=["GET", "POST"])
 def getRegister():
     form = RegisterForm()
-
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         new_user = User(username=form.username.data, password=hashed_password, admin=0)  # Default admin to 0
         db.session.add(new_user)
         db.session.commit()
-        return redirect('/login')
-
-    return render_template('register.html', form=form), 200  # Changed to 200
+        return redirect(url_for('getLogin'))
+    return render_template('register.html', form=form, Title="Admin Register")
 
 if __name__ == '__main__':
     with app.app_context():

@@ -1,0 +1,23 @@
+{% include '/includes/head.html' %}
+<link rel="stylesheet" href="/static/styles/main.css">
+<link rel="stylesheet" href="/static/styles/admin-board.css">
+<title>{{ Title }}</title>
+</head>
+<body>
+    {% include '/includes/navbar.html' %}
+    {% if user.admin == 1: %}
+        <div class="welcome-container">
+            <h1 id="user-greet">Hello, {{ user.username }}!</h1>
+            <a id="logout-btn" class="btn" href="/admin/logout">Logout</a>
+        </div>
+        <ul class="upload-container">
+            <li>
+                <a href="/admin/upload-partner">Upload Partners</a>
+            </li>
+            <li>
+                <a href="/upload-events.html">Update Events</a>
+            </li>
+        </ul>
+    {% endif %}
+</body>
+</html>

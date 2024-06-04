@@ -138,7 +138,7 @@
     text-align: left;
     width: 20rem;
     height: 28rem;
-    transition: transform 0.6s ease-in-out;
+    transition: transform 0.8s ease-out;
 }
 
 .m-t-item img {

@@ -1,11 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error!</title>
+{% include '/includes/head.html' %}
+<title>Error!</title>
 </head>
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    div {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn:last-child {
+        margin-left: 1rem;
+    }
+
+    .btn a {
+        text-decoration: none;
+        color: white;
+        text-align: center;
+    }
+</style>
 <body>
+    {% include '/includes/navbar.html' %}
     <h1>You're not autorised to visit this page!</h1>
+    <div>
+        <button class="btn"><a href="/admin/login">Login Admin</a></button>
+        <button class="btn"><a href="/admin/register">Register Admin</a></button> 
+    </div> 
 </body>
 </html>

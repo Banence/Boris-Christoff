@@ -1,0 +1,57 @@
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#user-greet {
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+#logout-btn {
+    margin-left: 2rem;
+}
+
+.upload-container {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin: 2rem;
+    padding: 0;
+}
+
+.upload-container li {
+    background-color: var(--color-hover-secondary);
+    padding: 2rem 0;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.upload-container li a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    transition: color 0.3s ease;
+}
+
+.upload-container li a:hover {
+    color: rgb(171, 141, 141);
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+label {
+    margin-bottom: 0.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 30rem;
+}

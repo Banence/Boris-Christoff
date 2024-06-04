@@ -1,10 +1,25 @@
 {% include '/includes/head.html' %}
 <script src="/static/scripts/animations.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js" defer></script>
+<link rel="stylesheet" href="/static/styles/main.css">
+<link rel="stylesheet" href="/static/styles/partners.css">
 <title>{{ Title }}</title>
 </head>
 <html>
 <body>
     {% include '/includes/navbar.html' %}
+    <div class="partners-header">
+        <h1>Our Amazing Partners</h1>
+        <p>Discover the wonderful organizations we collaborate with!</p>
+    </div>
+    <ul class="grid-container">
+        {% for partner in partners %}
+        <li class="grid-item">
+            <img src="{{ url_for('static', filename='files/uploaded_logos/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
+            <h2>{{ partner.name }}</h2>
+            <a href="{{ partner.website }}" target="_blank">Visit Website</a>
+        </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

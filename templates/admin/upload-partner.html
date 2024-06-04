@@ -1,0 +1,37 @@
+{% include '/includes/head.html' %}
+<link rel="stylesheet" href="/static/styles/main.css">
+<link rel="stylesheet" href="/static/styles/admin-board.css">
+<link rel="stylesheet" href="/static/styles/partners.css">
+<title>{{ Title }}</title>
+</head>
+<body>
+    {% include '/includes/navbar.html' %}
+    <h1>Upload Partners</h1>
+    <form action="/admin/upload-partner" method='POST' enctype='multipart/form-data'>
+        {{ form.hidden_tag() }}
+        <label for="name">Partner Name</label>
+        {{ form.name }}
+        <label for="website">Website</label>
+        {{ form.website }}
+        <label for="logo">Logo</label>
+        {{ form.logo }}
+        {{ form.submit }}
+    </form>
+    <ul class="grid-container">
+        {% for partner in partners %}
+        <li class="grid-item">
+            <img src="{{ url_for('static', filename='files/uploaded_logos/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
+            <h2>{{ partner.name }}</h2>
+            <a href="{{ partner.website }}" target="_blank">Visit Website</a>
+            <form>
+                <button style="margin-top: 1rem; width: 7rem;">Update Partner</button>
+            </form>
+            <form method="POST" action="/admin/upload-partners/del/{{ partner.id }}">
+                {{ form.hidden_tag() }}
+                <button style="margin-top: 0.5rem; width: 7rem;">Delete Partner</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

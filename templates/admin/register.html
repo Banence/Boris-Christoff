@@ -1,0 +1,29 @@
+{% include '/includes/head.html' %}
+<link rel="stylesheet" href="/static/styles/main.css">
+<title>{{ Title }}</title>
+</head>
+<style>
+    h1 {
+        text-align: center;
+        margin-top: 5rem;
+    }
+
+    form {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        width: 20rem;
+        margin: auto;
+    }
+    
+</style>
+<body>
+    <h1>Boris Christoff Admin Register</h1>
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.username }}
+        {{ form.password }}
+        {{ form.submit }}
+    </form>
+</body>
+</html>

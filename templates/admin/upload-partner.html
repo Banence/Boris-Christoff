@@ -3,6 +3,15 @@
 <link rel="stylesheet" href="/static/styles/admin-board.css">
 <link rel="stylesheet" href="/static/styles/partners.css">
 <title>{{ Title }}</title>
+<style>
+    .grid-container {
+        margin-top: 5rem;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-item {
+        width: 25rem;
+    }
+</style>
 </head>
 <body>
     {% include '/includes/navbar.html' %}
@@ -23,12 +32,10 @@
             <img src="{{ url_for('static', filename='files/uploaded_logos/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
             <h2>{{ partner.name }}</h2>
             <a href="{{ partner.website }}" target="_blank">Visit Website</a>
-            <form>
-                <button style="margin-top: 1rem; width: 7rem;">Update Partner</button>
-            </form>
+            <a href="/admin/update-partner/{{ partner.id }}"><button class="btn" style="margin-top: 0.5rem; width: 10rem; display: block;">Update Partner</button></a>
             <form method="POST" action="/admin/upload-partners/del/{{ partner.id }}">
                 {{ form.hidden_tag() }}
-                <button style="margin-top: 0.5rem; width: 7rem;">Delete Partner</button>
+                <button style="margin-top: 0.5rem; width: 10rem;" class="btn">Delete Partner</button>
             </form>
         </li>
         {% endfor %}

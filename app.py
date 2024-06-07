@@ -1,8 +1,8 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import FileField, StringField, PasswordField, SubmitField
+from wtforms import FileField, StringField, PasswordField, SubmitField, HiddenField
 from werkzeug.utils import secure_filename
 import os
 from wtforms.validators import InputRequired, Length, ValidationError, URL
@@ -38,6 +38,7 @@ class Partners(db.Model):
     logo = db.Column(db.String(120), nullable=False)
 
 class UploadPartnerForm(FlaskForm):
+    partner_id = HiddenField()
     logo = FileField("Logo", validators=[InputRequired()], render_kw={"class": "file-input"})
     name = StringField("Name", validators=[InputRequired(), Length(max=40)], render_kw={"class": "input-primary", "placeholder": "Partner Name"})
     website = StringField("Website", validators=[InputRequired(), URL(), Length(max=40)], render_kw={"class": "input-primary", "placeholder": "Partner Website"})
@@ -45,9 +46,9 @@ class UploadPartnerForm(FlaskForm):
 
     def validate_name(self, name):
         existing_partner = Partners.query.filter_by(name=name.data).first()
-        if existing_partner:
+        if existing_partner and existing_partner.id != int(self.partner_id.data):
             raise ValidationError("That partner name already exists. Please choose a different one.")
-
+        
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username", "class": "input-primary"})
     password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password", "class": "input-primary"})
@@ -128,6 +129,7 @@ def get_admin_partner_upload():
                 db.session.add(new_partner)
                 db.session.commit()
                 flash('Partner added successfully!', 'success')
+                return redirect('admin_dashboard')
             return render_template('admin/upload-partner.html', form=form, Title="Upload Partner", partners=partners), 200
         else:
             return render_template('includes/404.html'), 404
@@ -142,14 +144,46 @@ def getPartners():
 @app.route('/admin/upload-partners/del/<int:id>', methods=["POST"])
 def deletePartner(id):
     partner_id = id
-    if current_user.admin == 1:
-        partner = Partners.query.get(partner_id)
-        db.session.delete(partner)
-        db.session.commit()
-        return redirect(url_for('admin_dashboard'))
-    else:
+    try: 
+        if current_user.admin == 1:
+            partner = Partners.query.get(partner_id)
+            db.session.delete(partner)
+            db.session.commit()
+            return redirect(url_for('admin_dashboard'))
+        else:
+            return render_template('includes/404.html'), 404
+    except:
         return render_template('includes/404.html'), 404
+@app.route('/admin/update-partner/<int:partner_id>', methods=["GET", "POST"])
+def update_partner(partner_id):
+    partner = Partners.query.get_or_404(partner_id)
+    form = UploadPartnerForm(partner_id=partner.id)
+    try: 
+        if current_user.admin == 1:
+            if form.validate_on_submit():
+                partner.name = form.name.data
+                partner.website = form.website.data
 
+                if form.logo.data:
+                    logo = form.logo.data
+                    logo_filename = secure_filename(logo.filename)
+                    logo_path = os.path.join(app.config['UPLOAD_FOLDER'], logo_filename)
+                    logo.save(logo_path)
+                    partner.logo = logo_filename
+
+                db.session.commit()
+                flash('Partner updated successfully!', 'success')
+                return redirect(url_for('get_admin_partner_upload'))
+
+            elif request.method == 'GET':
+                form.name.data = partner.name
+                form.website.data = partner.website
+
+            return render_template('admin/update-partner.html', form=form, Title="Update Partner", partner=partner)
+        else:
+            return render_template('includes/404.html'), 404
+    except:
+        return render_template('includes/404.html'), 404
 
 if __name__ == '__main__':
     with app.app_context():

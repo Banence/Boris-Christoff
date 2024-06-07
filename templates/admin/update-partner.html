@@ -1,0 +1,21 @@
+{% include '/includes/head.html' %}
+<link rel="stylesheet" href="/static/styles/main.css">
+<link rel="stylesheet" href="/static/styles/admin-board.css">
+<link rel="stylesheet" href="/static/styles/partners.css">
+<title>Update Partner</title>
+</head>
+<body>
+    {% include '/includes/navbar.html' %}
+    <h1>Update Partner</h1>
+    <form action="" method='POST' enctype='multipart/form-data'>
+        {{ form.hidden_tag() }}
+        <label for="name">Partner Name</label>
+        {{ form.name }}
+        <label for="website">Website</label>
+        {{ form.website }}
+        <label for="logo">Logo</label>
+        {{ form.logo }}
+        {{ form.submit }}
+    </form>
+</body>
+</html>

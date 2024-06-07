@@ -9,12 +9,12 @@
 <body>
     {% include '/includes/navbar.html' %}
     <div class="partners-header">
-        <h1>Our Amazing Partners</h1>
-        <p>Discover the wonderful organizations we collaborate with!</p>
+        <h1 class="fade-in">Our Amazing Partners</h1>
+        <p class="slide-in-left">Discover the wonderful organizations we collaborate with!</p>
     </div>
     <ul class="grid-container">
         {% for partner in partners %}
-        <li class="grid-item">
+        <li class="grid-item fade-in">
             <img src="{{ url_for('static', filename='files/uploaded_logos/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
             <h2>{{ partner.name }}</h2>
             <a href="{{ partner.website }}" target="_blank">Visit Website</a>

@@ -12,14 +12,16 @@
         <h1 class="fade-in">Our Amazing Partners</h1>
         <p class="slide-in-left">Discover the wonderful organizations we collaborate with!</p>
     </div>
+    <img id="musical-line" class="fade-in" src="/static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
     <ul class="grid-container">
         {% for partner in partners %}
-        <li class="grid-item fade-in">
+        <li class="grid-item slide-in-left">
             <img src="{{ url_for('static', filename='files/uploaded_logos/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
             <h2>{{ partner.name }}</h2>
             <a href="{{ partner.website }}" target="_blank">Visit Website</a>
         </li>
         {% endfor %}
     </ul>
+    {% include '/includes/footer.html' %}
 </body>
 </html>

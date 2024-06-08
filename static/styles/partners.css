@@ -1,7 +1,7 @@
 .partners-header {
     text-align: left;
-    margin-bottom: 3rem;
     margin-left: 6rem;
+    margin-top: 2rem;
 }
 
 .partners-header h1 {
@@ -19,8 +19,8 @@
     padding: 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem; 
-    margin: 2rem 0;
+    gap: 4rem; 
+    margin-bottom: 4rem;
     margin-left: 6rem;
 }
 
@@ -32,13 +32,13 @@
 }
 
 .grid-item {
-    width: 20rem;
+    width: 23rem;
     margin: 0;
-    transition: transform 0.5s ease;
+    transition: transform 0.3s ease;
 }
 
-.grid-item:hover {
-    transform: scale(1.02);
+li.grid-item:hover {
+    transform: scale(1.05);
 }
 
 .grid-item h2 {

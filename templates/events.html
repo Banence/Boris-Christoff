@@ -1,0 +1,70 @@
+{% include '/includes/head.html' %}
+<script src="/static/scripts/animations.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js" defer></script>
+<link rel="stylesheet" href="/static/styles/main.css">
+<link rel="stylesheet" href="/static/styles/events.css">
+<title>{{ Title }}</title>
+</head>
+<body>
+    {% include '/includes/navbar.html' %}
+
+    <div class="events-header">
+        <h1>Events</h1>
+        <p>Explore our exciting upcoming events</p>
+    </div>
+
+    <img id="musical-line" class="fade-in" src="../static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
+
+    <ul class="grid-container">
+        {% for event in events %}
+        <li class="grid-item" id="event-{{ event.id }}">
+            <img src="{{ url_for('static', filename='files/uploaded_pictures/' + event.picture) }}" alt="{{ event.name }}">
+            <h2>{{ event.name }}</h2>
+            <p>{{ event.summary }}</p>
+            <a href="#" class="btn read-more-btn" data-event-id="{{ event.id }}">Read More</a>
+            <p style="display: none;" class="event-description" id="description-{{ event.id }}">{{ event.description }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div id="event-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-event-name"></h2>
+            <p id="modal-event-description"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.read-more-btn').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault(); 
+
+                    const eventId = this.getAttribute('data-event-id');
+                    showEventModal(eventId);
+                });
+            });
+
+            document.querySelector('.close').addEventListener('click', function () {
+                closeModal();
+            });
+        });
+
+        function showEventModal(eventId) {
+            const modal = document.getElementById('event-modal');
+            const eventName = document.getElementById('event-' + eventId).querySelector('h2').innerText;
+            const eventDescription = document.getElementById('description-' + eventId).innerText;
+
+            document.getElementById('modal-event-name').innerText = eventName;
+            document.getElementById('modal-event-description').innerText = eventDescription;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('event-modal');
+            modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

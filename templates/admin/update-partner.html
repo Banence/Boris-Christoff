@@ -37,9 +37,9 @@
             const formData = new FormData(form);
 
             fetch(`/admin/update-partner/${partnerId}`, {
-                method: 'PUT', // Use PUT or PATCH
+                method: 'PUT', 
                 headers: {
-                    'X-CSRFToken': getCsrfToken()  // Ensure CSRF token is included for security
+                    'X-CSRFToken': getCsrfToken()
                 },
                 body: formData
             })

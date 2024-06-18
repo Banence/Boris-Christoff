@@ -32,7 +32,7 @@
     <ul class="grid-container">
         {% for partner in partners %}
         <li class="grid-item" id="partner-{{ partner.id }}">
-            <img src="{{ url_for('static', filename='files/uploaded_logos/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
+            <img src="{{ url_for('static', filename='files/uploaded_pictures/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
             <h2>{{ partner.name }}</h2>
             <a href="{{ partner.website }}" target="_blank">Visit Website</a>
             <a href="/admin/update-partner/{{ partner.id }}"><button class="btn" style="margin-top: 0.5rem; width: 10rem; display: block;">Update Partner</button></a>

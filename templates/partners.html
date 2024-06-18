@@ -16,7 +16,7 @@
     <ul class="grid-container">
         {% for partner in partners %}
         <li class="grid-item slide-in-left">
-            <img src="{{ url_for('static', filename='files/uploaded_logos/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
+            <img src="{{ url_for('static', filename='files/uploaded_pictures/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
             <h2>{{ partner.name }}</h2>
             <a href="{{ partner.website }}" target="_blank">Visit Website</a>
         </li>

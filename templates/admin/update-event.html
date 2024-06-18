@@ -1,0 +1,61 @@
+{% include '/includes/head.html' %}
+<link rel="stylesheet" href="/static/styles/main.css">
+<link rel="stylesheet" href="/static/styles/admin-board.css">
+<link rel="stylesheet" href="/static/styles/events.css">
+<title>Update Event</title>
+</head>
+<body>
+    {% include '/includes/navbar.html' %}
+    <h1>Update Event</h1>
+    <form id="update-event-form" action="" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <label for="name">Event Name</label>
+        {{ form.name(class="input-primary") }}
+        <label for="summary">Summary</label>
+        {{ form.summary(class="textarea-primary") }}
+        <label for="picture">Picture</label>
+        {{ form.picture(class="file-input") }}
+        <label for="description">Description</label>
+        {{ form.description(class="textarea-primary") }}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn" style="background-color: #f5494c;">Update Event</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('update-event-form');
+            const eventId = '{{ event.id }}';
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); 
+
+                const formData = new FormData(form);
+
+                fetch(`/admin/update-event/${eventId}`, {
+                    method: 'POST', 
+                    headers: {
+                        'X-CSRFToken': getCsrfToken() 
+                    },
+                    body: formData 
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Event updated successfully!');
+                        window.location.href = '/events'; 
+                    } else {
+                        alert('Failed to update event. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            });
+
+            function getCsrfToken() {
+                return document.querySelector('input[name="csrf_token"]').value;
+            }
+        });
+    </script>
+</body>
+</html>

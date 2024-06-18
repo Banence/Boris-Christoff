@@ -1,17 +1,20 @@
-{% include '/includes/head.html' %}
-<link rel="stylesheet" href="/static/styles/main.css">
-<link rel="stylesheet" href="/static/styles/admin-board.css">
-<link rel="stylesheet" href="/static/styles/partners.css">
-<title>{{ Title }}</title>
-<style>
-    .grid-container {
-        margin-top: 5rem;
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .grid-item {
-        width: 25rem;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include '/includes/head.html' %}
+    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="/static/styles/admin-board.css">
+    <link rel="stylesheet" href="/static/styles/partners.css">
+    <title>{{ Title }}</title>
+    <style>
+        .grid-container {
+            margin-top: 5rem;
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .grid-item {
+            width: 25rem;
+        }
+    </style>
 </head>
 <body>
     {% include '/includes/navbar.html' %}
@@ -28,17 +31,52 @@
     </form>
     <ul class="grid-container">
         {% for partner in partners %}
-        <li class="grid-item">
+        <li class="grid-item" id="partner-{{ partner.id }}">
             <img src="{{ url_for('static', filename='files/uploaded_logos/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
             <h2>{{ partner.name }}</h2>
             <a href="{{ partner.website }}" target="_blank">Visit Website</a>
             <a href="/admin/update-partner/{{ partner.id }}"><button class="btn" style="margin-top: 0.5rem; width: 10rem; display: block;">Update Partner</button></a>
-            <form method="POST" action="/admin/upload-partners/del/{{ partner.id }}">
-                {{ form.hidden_tag() }}
-                <button style="margin-top: 0.5rem; width: 10rem;" class="btn">Delete Partner</button>
-            </form>
+            <button data-partner-id="{{ partner.id }}" class="btn delete-partner-btn" style="margin-top: 0.5rem; width: 10rem;">Delete Partner</button>
         </li>
         {% endfor %}
     </ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.delete-partner-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const partnerId = this.getAttribute('data-partner-id');
+                    deletePartner(partnerId);
+                });
+            });
+        });
+
+        function getCsrfToken() {
+            return document.querySelector('input[name="csrf_token"]').value;
+        }
+
+        function deletePartner(partnerId) {
+            if (confirm('Are you sure you want to delete this partner?')) {
+                fetch(`/admin/upload-partners/del/${partnerId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCsrfToken()  
+                    }
+                })
+                .then(response => {
+                    if (response.status === 204) {
+                        document.getElementById(`partner-${partnerId}`).remove();
+                    } else {
+                        alert('Failed to delete partner. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            }
+        }
+    </script>
 </body>
 </html>

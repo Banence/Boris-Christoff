@@ -141,39 +141,41 @@ def getPartners():
     partners = Partners.query.all()
     return render_template('partners.html', Title="Partners", partners=partners)
 
-@app.route('/admin/upload-partners/del/<int:id>', methods=["POST"])
+@app.route('/admin/upload-partners/del/<int:id>', methods=["DELETE"])
 def deletePartner(id):
     partner_id = id
-    try: 
+    try:
         if current_user.admin == 1:
             partner = Partners.query.get(partner_id)
             db.session.delete(partner)
             db.session.commit()
-            return redirect(url_for('admin_dashboard'))
+            return '', 204 
         else:
             return render_template('includes/404.html'), 404
     except:
         return render_template('includes/404.html'), 404
-@app.route('/admin/update-partner/<int:partner_id>', methods=["GET", "POST"])
+
+    
+@app.route('/admin/update-partner/<int:partner_id>', methods=["GET", "PUT", "PATCH"])
 def update_partner(partner_id):
     partner = Partners.query.get_or_404(partner_id)
     form = UploadPartnerForm(partner_id=partner.id)
-    try: 
+    try:
         if current_user.admin == 1:
-            if form.validate_on_submit():
-                partner.name = form.name.data
-                partner.website = form.website.data
+            if request.method in ["PUT", "PATCH"]:
+                if form.validate_on_submit():
+                    partner.name = form.name.data
+                    partner.website = form.website.data
 
-                if form.logo.data:
-                    logo = form.logo.data
-                    logo_filename = secure_filename(logo.filename)
-                    logo_path = os.path.join(app.config['UPLOAD_FOLDER'], logo_filename)
-                    logo.save(logo_path)
-                    partner.logo = logo_filename
+                    if form.logo.data:
+                        logo = form.logo.data
+                        logo_filename = secure_filename(logo.filename)
+                        logo_path = os.path.join(app.config['UPLOAD_FOLDER'], logo_filename)
+                        logo.save(logo_path)
+                        partner.logo = logo_filename
 
-                db.session.commit()
-                flash('Partner updated successfully!', 'success')
-                return redirect(url_for('get_admin_partner_upload'))
+                    db.session.commit()
+                    return '', 204  
 
             elif request.method == 'GET':
                 form.name.data = partner.name
@@ -184,6 +186,7 @@ def update_partner(partner_id):
             return render_template('includes/404.html'), 404
     except:
         return render_template('includes/404.html'), 404
+
 
 if __name__ == '__main__':
     with app.app_context():

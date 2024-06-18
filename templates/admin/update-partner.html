@@ -1,13 +1,16 @@
-{% include '/includes/head.html' %}
-<link rel="stylesheet" href="/static/styles/main.css">
-<link rel="stylesheet" href="/static/styles/admin-board.css">
-<link rel="stylesheet" href="/static/styles/partners.css">
-<title>Update Partner</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include '/includes/head.html' %}
+    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="/static/styles/admin-board.css">
+    <link rel="stylesheet" href="/static/styles/partners.css">
+    <title>Update Partner</title>
 </head>
 <body>
     {% include '/includes/navbar.html' %}
     <h1>Update Partner</h1>
-    <form action="" method='POST' enctype='multipart/form-data'>
+    <form id="update-partner-form" enctype='multipart/form-data'>
         {{ form.hidden_tag() }}
         <label for="name">Partner Name</label>
         {{ form.name }}
@@ -15,7 +18,43 @@
         {{ form.website }}
         <label for="logo">Logo</label>
         {{ form.logo }}
-        {{ form.submit }}
+        <button type="button" id="update-partner-btn" class="btn">Update Partner</button>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('update-partner-btn').addEventListener('click', function () {
+                updatePartner("{{ partner.id }}");
+            });
+        });
+
+        function getCsrfToken() {
+            return document.querySelector('input[name="csrf_token"]').value;
+        }
+
+        function updatePartner(partnerId) {
+            const form = document.getElementById('update-partner-form');
+            const formData = new FormData(form);
+
+            fetch(`/admin/update-partner/${partnerId}`, {
+                method: 'PUT', // Use PUT or PATCH
+                headers: {
+                    'X-CSRFToken': getCsrfToken()  // Ensure CSRF token is included for security
+                },
+                body: formData
+            })
+            .then(response => {
+                if (response.status === 204) {
+                    alert('Partner updated successfully!');
+                } else {
+                    alert('Failed to update partner. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        }
+    </script>
 </body>
 </html>

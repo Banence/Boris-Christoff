@@ -74,6 +74,7 @@
                 .then(response => {
                     if (response.ok) {
                         document.getElementById(`partner-${partnerId}`).remove();
+                        alert('Successfully deleted partner!')
                     } else {
                         alert('Failed to delete partner. Please try again.');
                     }

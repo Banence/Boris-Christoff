@@ -1,23 +1,25 @@
-{% include '/includes/head.html' %}
-<link rel="stylesheet" href="/static/styles/main.css">
-<link rel="stylesheet" href="/static/styles/admin-board.css">
-<link rel="stylesheet" href="/static/styles/events.css">
-<title>Upload Event</title>
-<style>
-    .button-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Align items center horizontally */
-        gap: 10px; /* Adjust the gap between buttons */
-    }
-
-    .update-event-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 0;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include '/includes/head.html' %}
+    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="/static/styles/admin-board.css">
+    <link rel="stylesheet" href="/static/styles/events.css">
+    <title>Upload Event</title>
+    <style>
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .update-event-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 0;
+        }
+    </style>
 </head>
 <body>
     {% include '/includes/navbar.html' %}
@@ -96,7 +98,7 @@
                     }
                 })
                 .then(response => {
-                    if (response.status === 204) {
+                    if (response.ok) {
                         document.getElementById(`event-${eventId}`).remove();
                         alert('Event deleted successfully!');
                     } else {

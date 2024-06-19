@@ -1,8 +1,11 @@
-{% include '/includes/head.html' %}
-<link rel="stylesheet" href="/static/styles/main.css">
-<link rel="stylesheet" href="/static/styles/admin-board.css">
-<link rel="stylesheet" href="/static/styles/events.css">
-<title>Update Event</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include '/includes/head.html' %}
+    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="/static/styles/admin-board.css">
+    <link rel="stylesheet" href="/static/styles/events.css">
+    <title>Update Event</title>
 </head>
 <body>
     {% include '/includes/navbar.html' %}
@@ -27,23 +30,24 @@
             const eventId = '{{ event.id }}';
 
             form.addEventListener('submit', function (event) {
-                event.preventDefault(); 
+                event.preventDefault();
 
                 const formData = new FormData(form);
 
                 fetch(`/admin/update-event/${eventId}`, {
-                    method: 'POST', 
+                    method: 'PUT',
                     headers: {
-                        'X-CSRFToken': getCsrfToken() 
+                        'X-CSRFToken': getCsrfToken()
                     },
-                    body: formData 
+                    body: formData
                 })
-                .then(response => {
-                    if (response.ok) {
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Event updated successfully!') {
                         alert('Event updated successfully!');
-                        window.location.href = '/events'; 
+                        window.location.href = '/events';
                     } else {
-                        alert('Failed to update event. Please try again.');
+                        alert('Failed to update event. ' + (data.error || 'Please try again.'));
                     }
                 })
                 .catch(error => {

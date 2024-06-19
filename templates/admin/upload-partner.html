@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/static/styles/main.css">
     <link rel="stylesheet" href="/static/styles/admin-board.css">
     <link rel="stylesheet" href="/static/styles/partners.css">
-    <title>{{ Title }}</title>
+    <title>Upload Partners</title>
     <style>
         .grid-container {
             margin-top: 5rem;
@@ -19,15 +19,15 @@
 <body>
     {% include '/includes/navbar.html' %}
     <h1>Upload Partners</h1>
-    <form action="/admin/upload-partner" method='POST' enctype='multipart/form-data'>
+    <form id="upload-partner-form" action="/admin/upload-partner" method='POST' enctype='multipart/form-data'>
         {{ form.hidden_tag() }}
         <label for="name">Partner Name</label>
-        {{ form.name }}
+        {{ form.name(class="input-primary") }}
         <label for="website">Website</label>
-        {{ form.website }}
+        {{ form.website(class="input-primary") }}
         <label for="logo">Logo</label>
-        {{ form.logo }}
-        {{ form.submit }}
+        {{ form.logo(class="file-input") }}
+        <button type="submit" class="btn">Upload Partner</button>
     </form>
     <ul class="grid-container">
         {% for partner in partners %}
@@ -35,7 +35,7 @@
             <img src="{{ url_for('static', filename='files/uploaded_pictures/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
             <h2>{{ partner.name }}</h2>
             <a href="{{ partner.website }}" target="_blank">Visit Website</a>
-            <a href="/admin/update-partner/{{ partner.id }}"><button class="btn" style="margin-top: 0.5rem; width: 10rem; display: block;">Update Partner</button></a>
+            <button class="btn update-partner-btn" data-partner-id="{{ partner.id }}" style="margin-top: 0.5rem; width: 10rem;">Update Partner</button>
             <button data-partner-id="{{ partner.id }}" class="btn delete-partner-btn" style="margin-top: 0.5rem; width: 10rem;">Delete Partner</button>
         </li>
         {% endfor %}
@@ -47,6 +47,13 @@
                 button.addEventListener('click', function () {
                     const partnerId = this.getAttribute('data-partner-id');
                     deletePartner(partnerId);
+                });
+            });
+
+            document.querySelectorAll('.update-partner-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const partnerId = this.getAttribute('data-partner-id');
+                    window.location.href = `/admin/update-partner/${partnerId}`;
                 });
             });
         });
@@ -65,7 +72,7 @@
                     }
                 })
                 .then(response => {
-                    if (response.status === 204) {
+                    if (response.ok) {
                         document.getElementById(`partner-${partnerId}`).remove();
                     } else {
                         alert('Failed to delete partner. Please try again.');

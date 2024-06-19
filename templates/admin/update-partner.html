@@ -13,11 +13,11 @@
     <form id="update-partner-form" enctype='multipart/form-data'>
         {{ form.hidden_tag() }}
         <label for="name">Partner Name</label>
-        {{ form.name }}
+        {{ form.name(class="input-primary") }}
         <label for="website">Website</label>
-        {{ form.website }}
+        {{ form.website(class="input-primary") }}
         <label for="logo">Logo</label>
-        {{ form.logo }}
+        {{ form.logo(class="file-input") }}
         <button type="button" id="update-partner-btn" class="btn">Update Partner</button>
     </form>
 
@@ -43,11 +43,13 @@
                 },
                 body: formData
             })
-            .then(response => {
-                if (response.status === 204) {
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Partner updated successfully!') {
                     alert('Partner updated successfully!');
+                    window.location.href = '/partners';
                 } else {
-                    alert('Failed to update partner. Please try again.');
+                    alert('Failed to update partner. ' + (data.error || 'Please try again.'));
                 }
             })
             .catch(error => {

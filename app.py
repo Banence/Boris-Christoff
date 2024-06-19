@@ -156,14 +156,14 @@ def getPartners():
     partners = Partners.query.all()
     return render_template('partners.html', Title="Partners", partners=partners)
 
-@app.route('/admin/update-partner/<int:partner_id>', methods=['GET', 'PUT'])
+@app.route('/admin/update-partner/<int:partner_id>', methods=['GET', 'PATCH'])
 def update_partner(partner_id):
     partner = Partners.query.get_or_404(partner_id)
     form = UploadPartnerForm()
 
     try:
         if current_user.admin == 1:
-            if request.method == 'PUT':
+            if request.method == 'PATCH':
                 form = UploadPartnerForm(meta={'csrf': False})  # Disable CSRF check for PUT
                 if form.validate():
                     logo_file = form.logo.data
@@ -180,8 +180,8 @@ def update_partner(partner_id):
 
             form.name.data = partner.name
             form.website.data = partner.website
-            form.partner_id.data = str(partner.id)  # Populate hidden field with partner id
-            return render_template('admin/update-partner.html', form=form, partner=partner)
+            form.partner_id.data = str(partner.id)  
+            return render_template('admin/update-partner.html', form=form, partner=partner), 201
         else:
             return render_template('includes/404.html'), 404
     except:
@@ -231,14 +231,14 @@ def upload_event():
     except:
         return render_template('includes/404.html') , 404
 
-@app.route('/admin/update-event/<int:event_id>', methods=['GET', 'POST', 'PUT'])
+@app.route('/admin/update-event/<int:event_id>', methods=['GET', 'POST', 'PATCH'])
 def update_event(event_id):
     event = Event.query.get_or_404(event_id)
     form = EventForm(obj=event)
 
     try:
         if current_user.admin == 1:
-            if request.method in ['POST', 'PUT']:
+            if request.method in ['POST', 'PATCH']:
                 try:
                     if form.validate_on_submit():
                         event.name = form.name.data

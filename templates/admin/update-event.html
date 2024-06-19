@@ -35,7 +35,7 @@
                 const formData = new FormData(form);
 
                 fetch(`/admin/update-event/${eventId}`, {
-                    method: 'PUT',
+                    method: 'PATCH',
                     headers: {
                         'X-CSRFToken': getCsrfToken()
                     },

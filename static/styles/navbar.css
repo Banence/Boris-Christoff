@@ -1,0 +1,279 @@
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: var(--color-primary-bg);
+    transition: var(--transition-primary);
+}
+
+/* Make navbar static on all pages except index */
+body:not(.is-index) {
+    padding-top: 120px;
+}
+
+body:not(.is-index) .navbar {
+    position: fixed;
+    background: var(--color-primary-bg);
+}
+
+.navbar-container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6rem;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.nav-logo-img {
+    height: 100px;
+    width: auto;
+    transition: height 0.3s ease;
+}
+
+/* Desktop Navigation */
+.nav-links {
+    display: flex;
+    gap: 1.4rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: var(--transition-primary);
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-hover-secondary);
+    transition: var(--transition-primary);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link i {
+    font-size: 0.9rem;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 2000;
+    position: relative;
+}
+
+/* Burger icon */
+.mobile-menu-btn .burger,
+.mobile-menu-btn .burger::before,
+.mobile-menu-btn .burger::after {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn .burger {
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.mobile-menu-btn .burger::before {
+    content: '';
+    top: -8px;
+}
+
+.mobile-menu-btn .burger::after {
+    content: '';
+    bottom: -8px;
+}
+
+/* Active state */
+.mobile-menu-btn.active .burger {
+    background: transparent;
+}
+
+.mobile-menu-btn.active .burger::before {
+    top: 0;
+    transform: translate(-50%, 0) rotate(45deg);
+}
+
+.mobile-menu-btn.active .burger::after {
+    bottom: 0;
+    transform: translate(-50%, 0) rotate(-45deg);
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background: var(--color-primary-bg);
+    padding: 6rem 2rem 2rem;
+    transition: transform 0.3s ease;
+    z-index: 1500;
+    overflow-y: auto;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+}
+
+.mobile-nav.active {
+    transform: translateX(0);
+}
+
+.mobile-nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1400;
+}
+
+.mobile-nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Donate Button Styling */
+.nav-donate {
+    background-color: #e63946;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    transition: var(--transition-primary);
+}
+
+.nav-donate:hover {
+    background-color: #dc2f3d;
+    transform: translateY(-2px);
+}
+
+/* Transparent Navbar for Hero Section */
+body.is-index .navbar {
+    background: transparent;
+    position: absolute;
+}
+
+body.is-index {
+    padding-top: 0;
+}
+
+body.is-index .navbar.scrolled {
+    position: fixed;
+    background: var(--color-primary-bg);
+}
+
+/* Responsive Design */
+@media (max-width: 1290px) {
+    .navbar-container .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .mobile-nav {
+        display: block;
+    }
+
+    .mobile-nav .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+        display: flex;
+    }
+
+    .mobile-nav .nav-link {
+        font-size: 1.1rem;
+    }
+
+    .mobile-nav .nav-donate {
+        margin-top: 1rem;
+        width: 90%;
+        justify-content: center;
+    }
+}
+
+/* Adjust logo size for mobile */
+@media (max-width: 768px) {
+    body:not(.is-index) {
+        padding-top: 100px;
+    }
+
+    .nav-logo-img {
+        height: 80px;
+    }
+
+    .navbar-container {
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .mobile-nav {
+        width: 250px;
+    }
+}
+
+/* Update the navbar styling for who-we-are page */
+body.who-we-are .navbar {
+    position: absolute;
+    background: transparent;
+    top: 0;
+    width: 100%;
+}
+
+/* Remove padding-top for who-we-are page */
+body.who-we-are {
+    padding-top: 0;
+}
+
+/* Ensure navbar becomes visible when scrolled */
+body.who-we-are .navbar.scrolled {
+    position: fixed;
+    background: var(--color-primary-bg);
+}

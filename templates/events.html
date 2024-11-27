@@ -5,66 +5,88 @@
 <link rel="stylesheet" href="/static/styles/events.css">
 <title>{{ Title }}</title>
 </head>
-<body>
+<body class="events-page">
     {% include '/includes/navbar.html' %}
 
-    <div class="events-header">
-        <h1>Events</h1>
-        <p>Explore our exciting upcoming events</p>
-    </div>
-
-    <img id="musical-line" class="fade-in" src="../static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
-
-    <ul class="grid-container">
-        {% for event in events %}
-        <li class="grid-item" id="event-{{ event.id }}">
-            <img src="{{ url_for('static', filename='files/uploaded_pictures/' + event.picture) }}" alt="{{ event.name }}">
-            <h2>{{ event.name }}</h2>
-            <p>{{ event.summary }}</p>
-            <a href="#" class="btn read-more-btn" data-event-id="{{ event.id }}">Read More</a>
-            <p style="display: none;" class="event-description" id="description-{{ event.id }}">{{ event.description }}</p>
-        </li>
-        {% endfor %}
-    </ul>
-
-    <div id="event-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modal-event-name"></h2>
-            <p id="modal-event-description"></p>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Musical Events</h1>
+            <p>Join us for unforgettable performances and musical experiences that will touch your soul</p>
+        </div>
+        <div class="hero-scroll-indicator">
+            <div class="scroll-arrow"></div>
         </div>
     </div>
 
+    <div class="events-container">
+        <div class="section-title">
+            <h2 data-aos="fade-up">Upcoming Events</h2>
+            <div class="title-underline" data-aos="width"></div>
+        </div>
+
+        <div class="events-grid">
+            {% for event in events %}
+            <div class="event-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                <div class="event-image-container">
+                    <img src="/{{ event.picture }}" alt="{{ event.name }}">
+                    <div class="image-overlay"></div>
+                    <div class="event-date">
+                        <span class="date">{{ event.date.strftime('%d') }}</span>
+                        <span class="month">{{ event.date.strftime('%b') }}</span>
+                    </div>
+                </div>
+                <div class="event-content">
+                    <h2 class="event-title">{{ event.name }}</h2>
+                    <p class="event-summary">{{ event.summary }}</p>
+                    <div class="event-full-description" style="display: none;">{{ event.description }}</div>
+                    <div class="event-details" style="display: none;">
+                        <span class="event-time">{{ event.date.strftime('%I:%M %p') }}</span>
+                        <span class="event-location">{{ event.location }}</span>
+                        <span class="event-price">{{ event.price }}</span>
+                    </div>
+                    <button class="see-more-btn" data-event-id="{{ event.id }}">
+                        <span>Learn More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="modal-overlay">
+        <div class="event-modal">
+            <button class="close-modal" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-content">
+                <div class="modal-image">
+                    <img id="modal-event-image" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modal-event-name"></h2>
+                    <div class="modal-meta">
+                        <span class="modal-date" id="modal-event-date">
+                            <i class="far fa-calendar-alt"></i>
+                            <span></span>
+                        </span>
+                    </div>
+                    <div class="modal-description" id="modal-event-description"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include '/includes/footer.html' %}
+    
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.read-more-btn').forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault(); 
-
-                    const eventId = this.getAttribute('data-event-id');
-                    showEventModal(eventId);
-                });
-            });
-
-            document.querySelector('.close').addEventListener('click', function () {
-                closeModal();
-            });
+        AOS.init({
+            duration: 800,
+            offset: 100,
+            once: true
         });
-
-        function showEventModal(eventId) {
-            const modal = document.getElementById('event-modal');
-            const eventName = document.getElementById('event-' + eventId).querySelector('h2').innerText;
-            const eventDescription = document.getElementById('description-' + eventId).innerText;
-
-            document.getElementById('modal-event-name').innerText = eventName;
-            document.getElementById('modal-event-description').innerText = eventDescription;
-            modal.style.display = 'block';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('event-modal');
-            modal.style.display = 'none';
-        }
     </script>
+    <script src="/static/scripts/events.js"></script>
 </body>
 </html>

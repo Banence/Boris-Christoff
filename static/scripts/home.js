@@ -16,3 +16,50 @@ buttons.forEach(button => {
     delete activeSlide.dataset.active
   })
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Intersection Observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Unobserve after animation
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '50px'
+    });
+
+    // Observe all fade-in elements
+    document.querySelectorAll('.fade-in, .featured-news-card, .hero-content > *').forEach((el) => {
+        observer.observe(el);
+    });
+
+    // Add stagger delay to hero content children
+    document.querySelectorAll('.hero-content > *').forEach((el, index) => {
+        el.style.transitionDelay = `${index * 200}ms`;
+    });
+
+    function updateHeroHeight() {
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            const navbarHeight = navbar.offsetHeight;
+            document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
+        }
+    }
+
+    // Initial calculation
+    updateHeroHeight();
+
+    // Update on window resize
+    window.addEventListener('resize', updateHeroHeight);
+
+    // Update when navbar changes (e.g., mobile menu toggle)
+    const navbarObserver = new ResizeObserver(updateHeroHeight);
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        navbarObserver.observe(navbar);
+    }
+});

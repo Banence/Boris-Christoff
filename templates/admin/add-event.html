@@ -1,0 +1,54 @@
+{% include '/includes/head.html' %}
+<link rel="stylesheet" href="/static/styles/admin.css">
+<title>Add Event - Admin</title>
+</head>
+<body>
+    {% include '/includes/navbar.html' %}
+
+    <div class="admin-container">
+        <h1 class="dashboard-title">Add New Event</h1>
+
+        <form class="admin-form" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="form-label" for="title">Event Title</label>
+                <input type="text" id="title" name="title" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="description">Description</label>
+                <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="date">Date</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="time">Time</label>
+                <input type="time" id="time" name="time" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="location">Location</label>
+                <input type="text" id="location" name="location" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="image">Event Image</label>
+                <input type="file" id="image" name="image" class="form-control" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-check-label">
+                    <input type="checkbox" name="featured" class="form-check-input"> Featured Event
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Event</button>
+        </form>
+    </div>
+
+    {% include '/includes/footer.html' %}
+</body>
+</html> 

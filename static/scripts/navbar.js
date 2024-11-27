@@ -1,68 +1,54 @@
-const burgerIconElement = document.getElementById("burger-icon");
-const navbarMobileElement = document.querySelector(".nav-mobile-container");
-const burgerSvgElement = document.getElementById("burger-svg");
-const crossSvgElement = document.getElementById("cross-svg");
+document.addEventListener('DOMContentLoaded', function () {
+    const navbar = document.querySelector('.navbar');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
 
-burgerIconElement.addEventListener('click', function () {
-    navbarMobileElement.classList.toggle("visible");
-    burgerSvgElement.classList.toggle("open");
-    crossSvgElement.classList.toggle("open");
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const dropdownSVGs = document.querySelectorAll('.dropdown-svg');
-    const dropdownItems = document.querySelectorAll('.dropdown-item-m a');
-
-    dropdownSVGs.forEach((svg, index) => {
-        svg.addEventListener('click', function(event) {
-            event.stopPropagation();
-            event.preventDefault(); 
-            const dropdown = document.querySelectorAll('.dropdown-m')[index];
-            dropdown.classList.toggle('show');
-            svg.classList.toggle('rotated');
-        });
-    });
-
-    dropdownItems.forEach(item => {
-        item.addEventListener('click', function(event) {
-            event.stopPropagation();
-            event.preventDefault();
-            const navbar = document.querySelector('.nav-mobile-container');
-            navbar.classList.remove('visible');
-            window.location.href = this.href; 
-        });
-    });
-
-    document.addEventListener('click', function() {
-        const dropdowns = document.querySelectorAll('.dropdown-m');
-        dropdowns.forEach((dropdown) => {
-            dropdown.classList.remove('show');
-        });
-        const svgs = document.querySelectorAll('.dropdown-svg');
-        svgs.forEach((svg) => {
-            svg.classList.remove('rotated');
-        });
-    });
-});
-
-let lastScrollTop = 0;
-const navbar = document.querySelector('.nav-container');
-
-window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-
-    if (scrollTop > lastScrollTop) {
-        navbar.classList.add('hidden');
-    } else {
-        navbar.classList.remove('hidden');
+    if (!navbar || !mobileMenuBtn || !mobileNav || !mobileNavOverlay) {
+        console.error('Required navbar elements are missing.');
+        return;
     }
 
-    lastScrollTop = Math.max(scrollTop, 0); 
+    const toggleMobileMenu = (force = null) => {
+        const isActive = force !== null ? force : mobileNav.classList.toggle('active');
+        mobileNav.classList.toggle('active', isActive);
+        mobileNavOverlay.classList.toggle('active', isActive);
+        mobileMenuBtn.classList.toggle('active', isActive);
+        mobileMenuBtn.setAttribute('aria-expanded', isActive);
+        document.body.style.overflow = isActive ? 'hidden' : '';
+    };
+
+    // Handle window resize
+    const handleResize = () => {
+        if (window.innerWidth > 1290 && mobileNav.classList.contains('active')) {
+            toggleMobileMenu(false);
+        }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Update transparent navbar handling
+    if (document.body.classList.contains('is-index') || document.body.classList.contains('who-we-are')) {
+        const handleScroll = () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+    }
+
+    // Event Listeners
+    mobileMenuBtn.addEventListener('click', () => toggleMobileMenu());
+    mobileNavOverlay.addEventListener('click', () => toggleMobileMenu(false));
+
+    document.addEventListener('click', (e) => {
+        if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileNav.classList.contains('active')) {
+            toggleMobileMenu(false);
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+            toggleMobileMenu(false);
+        }
+    });
 });
-
-
-
-
-
-
-

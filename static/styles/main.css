@@ -40,7 +40,7 @@ html {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -49,9 +49,7 @@ html {
 }
 
 .fade-in {
-  opacity: 0; 
-  transform: translateY(30px);
-  transition: opacity 1s, transform 1s;
+  animation: fadeIn 0.3s ease forwards;
 }
 
 .fade-in.visible {
@@ -62,15 +60,16 @@ html {
 @keyframes fadeOut {
   from {
     opacity: 1;
+    transform: translateY(0);
   }
   to {
     opacity: 0;
+    transform: translateY(20px);
   }
 }
 
 .fade-out {
-  opacity: 1; 
-  transition: opacity 1s ease infinite;
+  animation: fadeOut 0.3s ease forwards;
 }
 
 .fade-out.visible {
@@ -221,4 +220,13 @@ html {
       width: 23.3rem;
       height: 8rem;
     }
+}
+
+:root {
+    --color-primary-bg: #0E121D;
+    --color-hover-secondary: #f5494c;
+    --color-text-primary: #333333;
+    --color-text-secondary: #666666;
+    --shadow-primary: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --transition-primary: all 0.3s ease;
 }

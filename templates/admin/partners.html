@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Admin - Partner Management{% endblock %}
+
+{% block admin_content %}
+<h1 class="dashboard-title">Partner Management</h1>
+
+<div class="admin-actions">
+    <a href="{{ url_for('add_partner') }}" class="btn-primary">
+        <i class="fas fa-plus"></i> Add New Partner
+    </a>
+</div>
+
+<div class="admin-list">
+    {% for partner in partners %}
+    <div class="admin-list-item" id="partner-{{ partner.id }}">
+        <div class="partner-preview">
+            {% if partner.logo %}
+            <img src="{{ partner.logo }}" alt="{{ partner.name }}" class="partner-logo-preview">
+            {% endif %}
+        </div>
+        <div class="partner-details">
+            <h3>{{ partner.name }}</h3>
+            <a href="{{ partner.website }}" target="_blank" class="partner-website">
+                <i class="fas fa-external-link-alt"></i> Visit Website
+            </a>
+            <div class="partner-actions">
+                <a href="{{ url_for('edit_partner', partner_id=partner.id) }}" class="btn-secondary">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <button onclick="deletePartner('{{ partner.id }}')" class="btn-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+function deletePartner(partnerId) {
+    if (confirm('Are you sure you want to delete this partner?')) {
+        fetch(`/admin/partners/delete/${partnerId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById(`partner-${partnerId}`).remove();
+                alert('Partner deleted successfully!');
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the partner');
+        });
+    }
+}
+</script>
+{% endblock %} 

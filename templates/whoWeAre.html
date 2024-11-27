@@ -6,165 +6,305 @@
 <title>{{ Title }}</title>
 </head>
 <html>
-<body>
+<body class="who-we-are">
     {% include '/includes/navbar.html' %}
-    <div class="header-img-container">
-        <img class="thumbnail" src="/static/images/sportvsaggressionBG.png" alt="header img">
-        <h1>Boris Christoff Foundation</h1>
+    <div class="hero-section">
+        <div class="hero-background">
+            <img class="hero-image" src="/static/images/sportvsaggressionBG.png" alt="Boris Christoff Foundation">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line">Boris</span>
+                <span class="title-line">Christoff</span>
+                <span class="title-line">Foundation</span>
+            </h1>
+            <p class="hero-subtitle">Preserving the Legacy of Classical Music</p>
+            <div class="hero-decoration">
+                <div class="decoration-line"></div>
+                <div class="decoration-icon">♪</div>
+                <div class="decoration-line"></div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to Discover</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
     </div>
-    <ul id="mission-vision">
-        <li class="fade-in">
-          <h1>Mission</h1>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem delectus doloremque dolor temporibus, at similique quos. Voluptatibus recusandae vel quis, mollitia nostrum neque, deserunt quo reprehenderit, facere incidunt possimus tempore?</p>
-        </li>
-        <li class="fade-in">
-          <h1>Vision</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum numquam at quia nesciunt eum necessitatibus iste modi exercitationem, nostrum iusto magnam. Quis maiores facere natus quas itaque adipisci praesentium magnam.</p>
-        </li>
-    </ul>
-    <img id="musical-line" class="fade-in" src="/static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
-    <div class="our-story-container" id="our-story">
-        <h1 class="fade-in">Our Story</h1>
-        <p class="fade-in">Boris Hristov Foundation is registered as a public benefit foundation with the mission to preserve the creative heritage of Boris Hristov, to help talented artists, to organize and realize cultural events of high artistic value, to fight for the preservation of the fundamental and timeless achievements of Bulgarian culture and art. Part of the fulfilment of this mission is the development of intensive international cooperation in the field of musical creativity, performing arts and concert activity.</p>
-        <ul class="more-info-container">
-            <ul class="ul-column-container">
-                <li class="slide-in-left">
-                    The Foundation organizes and conducts concerts, master classes, donation campaigns and seminars, as well as contributes to the presentation and realization of Bulgarian artists in the country and abroad.  The Boris Hristov Foundation maintains close contacts with governmental and non-governmental organizations, associations and foundations with similar goals.
-                </li>
-                <li class="slide-in-left">
-                    In the leadership of the Foundation are Stoyan Bonchev, Nikolay Angelov and the world - famous tenor Maestro Boyko Tsvetanov - the first and most successful disciple of the great Boris Hristov. Our honorary members and supporters are the world-renowned pianist and composer Maestro Alexander Zografov, Academician Valentin Bobievsky, Academician Nikolai Tsankov, Prof. Margarita Boncheva, Prof. Georgi Chapkanov, who sculpted the most remarkable sculptural portrait of Boris Hristov - the symbol of our Foundation, as well as many other prominent representatives of culture, science and public life.
-                </li>
-            </ul>
-            <li class="slide-in-left li-diff">
-                In recent years, the Boris Hristov Foundation has held a series of celebrations, donation campaigns, events and concerts related to the 100th anniversary of Maestro Hristov. Part of the cycle of celebrations realized by the Foundation was the naming and grand opening of the first hall in Sofia, named after Boris Hristov. In this hall, located in the Central Military Club in Sofia, stands the sculpture of Boris Hristov, created by Professor Chapkanov, which our Foundation donated to the Ministry of Defence. This was a unique event - the fruit of the joint efforts of the Boris Hristov Foundation, Professor Georgi Chapkanov and three Ministers of Defence of the Republic of Bulgaria, which once again proved that when there is a true, national cause it meets continuity at all levels and unites our nation!
-            </li>
-        </ul>
+    <section class="mission-vision-section">
+        <div class="section-title-wrapper">
+            <h1 class="section-title fade-in">Mission & Vision</h1>
+        </div>
+        <div class="mission-vision-grid">
+            <div class="mission-card slide-in-left">
+                <div class="card-inner">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h2>Mission</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem delectus doloremque dolor temporibus, at similique quos. Voluptatibus recusandae vel quis, mollitia nostrum neque, deserunt quo reprehenderit, facere incidunt possimus tempore?</p>
+                </div>
+                <div class="card-decoration"></div>
+            </div>
+
+            <div class="vision-card slide-in-right">
+                <div class="card-inner">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h2>Vision</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum numquam at quia nesciunt eum necessitatibus iste modi exercitationem, nostrum iusto magnam. Quis maiores facere natus quas itaque adipisci praesentium magnam.</p>
+                </div>
+                <div class="card-decoration"></div>
+            </div>
+        </div>
+    </section>
+    <div class="musical-line-container">
+        <div class="music-staff">
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            
+            <div class="musical-notes">
+                <div class="note-group">
+                    <div class="note">♪</div>
+                    <div class="note">♫</div>
+                </div>
+                <div class="note-group">
+                    <div class="note">♩</div>
+                    <div class="note">♪</div>
+                </div>
+                <div class="note-group">
+                    <div class="note">♫</div>
+                    <div class="note">♬</div>
+                </div>
+                <div class="note-group">
+                    <div class="note">♪</div>
+                    <div class="note">♩</div>
+                </div>
+                <div class="note-group">
+                    <div class="note">♬</div>
+                    <div class="note">♫</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <img id="musical-line" class="fade-in" src="/static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
-    <span id="management-and-team"></span>
-    <h1 id="m-t-header-text" class="fade-in">Management And Team</h1>
-    <ul class="m-t-container">
-      <li class="m-t-item slide-in-left">
-          <img src="/static/images/boykopfp.png" alt="BZ">
-          <p class="name">Boiko Tsvetanov</p>
-          <p class="position">Founder</p>
-          <a style="cursor: pointer;" class="read-more" 
-          data-modal-content=
-          "Boyko Tsvetanov is one of the greatest and most successful Bulgarian tenors of all time. He is the first, most famous and beloved student of Boris Christoff. Maestro Christoff, who had no children, wanted to make him his successor. Tearful, Boyko Tsvetanov refused, saying that his successor was the entire Bulgarian people. Boyko Tsvetanov graduated from the Music Academy in the class of Professor Chavdar Hadzhiev. He specialized in Bussetto Academy with Maestro Carlo Bergonzi. For some time he also worked with the legendary tenor Franco Corelli. Since 1991 he has been a member of the Zurich Opera, on whose stage he has performed most of the standard tenor repertoire. She made her debut as a soloist of the National Opera and Ballet in Sofia in the role of Lindoro from &quot;The Italian Woman in Algiers&quot;. After winning the competitions for opera singers in Bilbao and Sofia, in 1988 he was invited to the Vienna State Opera for the roles of the Italian singer in &quot;Capriccio&quot; and &quot;The Knight of the Rose&quot; by Richard Strauss. Thus began his international career. In 1991, he was already a soloist of the prestigious Zurich Opera. He has sung as a guest on almost all major opera stages in Munich, Hamburg, Dusseldorf, Frankfurt, &quot;Deutsche Oper&quot; Berlin, Vienna, Salzburg, Verona, Barcelona, ​​Valencia, Las Palmas, &quot;Opera de Basti&quot; Paris, Edinburgh, America, Japan, Brazil, Mexico, etc. There are more than 60 central parties, the most famous of which are:
+    <section class="our-story-section">
+        <div class="section-title-wrapper">
+            <h1 class="section-title fade-in">Our Story</h1>
+        </div>
+        
+        <div class="story-container">
+            <div class="story-main-card story-fade-up">
+                <div class="card-inner">
+                    <p>Boris Hristov Foundation is registered as a public benefit foundation with the mission to preserve the creative heritage of Boris Hristov, to help talented artists, to organize and realize cultural events of high artistic value, to fight for the preservation of the fundamental and timeless achievements of Bulgarian culture and art.</p>
+                </div>
+            </div>
 
-          Cavaradossi (Tosca), Calaf (Turandot), Manrico (Troubadour), Radames (Aida), Canio (Pagliacci), Arnoldo (Wilhelm Tell). He has sung with names such as Plácido Domingo, José Carreras, Nikolay Gyaurov, Juan Pons, Samuel Remy, Ruggero Raimondi, Mirella Freni, Catia Richarelli, Leo Nucci, Renato Bruzon, Gena Dimitrova and under the baton of Ricardo Chai, Zubin Meta, Nicola Resquinho, Carlo Franchi, Lamberto Gardelli, Carlo Franchi, Marcello Viotti, Paolo Carignani, Velzer-Most, Nello Santi, and others. In recent years, together with Stoyan Bonchev and Alex Zografov, she participated in almost all musical stage and public events of the &quot;Boris Hristov&quot; Foundation!">
-          Read more
-        </a>
-      </li>
-      <li class="m-t-item slide-in-left">
-          <img src="/static/images/stoyanpfp.jpeg" alt="SB">
-          <p class="name">Stoyan Bonchev</p>
-          <p class="position">Chairman</p>
-          <a style="cursor: pointer;" class="read-more" data-modal-content=
-          "Stoyan Bonchev was born in Sofia. He received his basic education at the 133rd school - the Russian Language High School &quot;A.S. Pushkin&quot; After that, 
-          he continued his education at the First English Language High School &quot;William Shakespeare&quot; - Sofia, graduating with honors in 1995. In the same year, he completed a language specialization in English at ELS - London.
-          In 2002, Stoyan Bonchev graduated from the University of National and World Economy (UNWS) with a Masters degree and a major in International Economic Relations (IEO). During his studies, he also completed a one-year specialization (Handelswissenschaft) at the Vienna University of Economics (Wirtschaftsuniversität Wien). In 2009, he graduated from the New Bulgarian University (NBU) with a Masters degree in classical singing in the class of the world-renowned opera prima Maestra Hristina Angelakova. During and after his studies, he conducted several specializations in opera singing in Zurich under the guidance of the soloist of Opera Zurich and world-famous Bulgarian tenor Maestro Boyko Tsvetanov. He is actively involved in sports, 
-          in 1992 he won a gold medal at the &quot;Young Lions&quot; open tae kwon do tournament for juniors up to 16 years of age, in 2000 he was a bronze medalist, in 2001 - a silver medalist of the Republican Championship in leg lifting. 
-          He speaks English, Russian and German.">Read more
-          </a>
-      </li>
-      <li class="m-t-item slide-in-left">
-          <img src="/static/images/chencepfp.jpeg" alt="NA">
-          <p class="name">Nikolai Angelov</p>
-          <p class="position">CEO</p>
-          <a style="cursor: pointer;" class="read-more" data-modal-content=
-          "Nikolai Angelov is an economic expert with extensive managerial and organizational experience. He received his secondary education at Bunker High School, Missouri, USA. He graduated from the University of Plovdiv as a Master of Human Resources Management, as well as Thames Valley University, as a Bachelor of Business Administration. He participated in various projects at home and abroad. He worked as the Chairman of the Management Board of &quot;Montazhi&quot; JSC, was a chief expert in the Ministry of Finance, and held senior management positions in a number of national and foreign companies such as &quot;Saint Gobain Weber&quot;, &quot;Sevval Corporation SL&quot;, &quot;John Deere&quot; and others. He is fluent in Russian, English and Spanish.">Read more
-          </a>
-      </li>
-      <li class="m-t-item slide-in-left">
-          <img src="/static/images/alexpfp.jpg" alt="AZ">
-          <p class="name">Alex Zografov</p>
-          <p class="position">Art Director</p>
-          <a style="cursor: pointer;" class="read-more" data-modal-content=
-          "Alex Zografov is one of the most brilliant musicians of our time - a virtuoso pianist, composer and orchestrator. He holds a PhD in composition from the University of Los Angeles. He was a teacher at the Seth Riggs Academy in Los Angeles to stars of the rank of Janet Jackson. Maestro Zografoff has a worldwide career in pop music, jazz and musicals. In Los Angeles he has worked with some of the biggest names in the industry such as Nana Muscouri, Frank Zappa, Joe Cocker, George Benson, Barbara Streisand, Sting, Jeff Beck and a host of other celebrities. He has personally staged nearly all of Andrew Lloyd Webber's musicals on Broadway as conductor and musical director. In Los Angeles, he began playing with the most famous musicians and orchestras in the world, such as the big band Everett Coven. His orchestra gathers some of the best professionals in the whole world. Before arriving in the USA, Alex Zografov worked in Toronto, where one of the largest American film studios wanted to buy his music to use in their films. He refused because he received an offer from Don Ellis - this was in 1977. At that time, Alex was experimenting a lot in jazz. He then worked briefly with Gino Vanelli. Around 1976, only he and Milcho Leviev were the Bulgarian musicians in Los Angeles. Maestro Zografov met with Queen Elizabeth II in Cyprus, where he organized a musical program to welcome her. Also, during his stay in Cyprus, he actively worked with one of the biggest stars of Greece, Yorgos Dalaras. In recent years, he has devoted himself mostly to composing. He has choral, film music, compositions for the symphony orchestra, and the peak of his work is the opera &quot;Orpheus Lives&quot;, whose world premiere will take place in 2023.
-          
-          Here are the original words about Alex from some of the greatest musicians in the world and those of Queen Elizabeth herself:
-          
-          &quot;You are the most impressive musician I've ever heard!&quot; - Frank Zappa 
-          &quot;Alex performs with great conviction.&quot; - George Benson
-          &quot;You are great! I could listen to you play and sing all night!&quot; - Mel Torme
-          &quot;Alex, I'll catch up with you, yet!&quot; - Joe Cocker 
-          &quot;If I ever play again, I would love to play with you. Listening to your music is like visiting places I have never been!&quot; - Don Ellis
-          &quot;It was wonderful! A wonderful performance!&quot; - Queen Elizabeth II">Read more
-          </a>
-      </li>
-    </ul>
+            <div class="story-grid">
+                <div class="story-card story-fade-up">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <p>The Foundation organizes and conducts concerts, master classes, donation campaigns and seminars, as well as contributes to the presentation and realization of Bulgarian artists in the country and abroad.</p>
+                </div>
 
-    <div id="modal" class="modal">
-      <div class="modal-content">
-          <span class="close">&times;</span>
-          <p id="modal-text"></p>
-      </div>
+                <div class="story-card story-fade-up">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <p>In the leadership of the Foundation are Stoyan Bonchev, Nikolay Angelov and the world-famous tenor Maestro Boyko Tsvetanov - the first and most successful disciple of the great Boris Hristov.</p>
+                </div>
+
+                <div class="story-card story-fade-up">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>In recent years, the Boris Hristov Foundation has held a series of celebrations, donation campaigns, events and concerts related to the 100th anniversary of Maestro Hristov.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="musical-line-container">
+        <div class="music-staff">
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            
+            <div class="musical-notes">
+                <div class="note-group">
+                    <div class="note">♪</div>
+                    <div class="note">♫</div>
+                </div>
+                <div class="note-group">
+                    <div class="note">♩</div>
+                    <div class="note">♪</div>
+                </div>
+                <div class="note-group">
+                    <div class="note">♫</div>
+                    <div class="note">♬</div>
+                </div>
+                <div class="note-group">
+                    <div class="note">♪</div>
+                    <div class="note">♩</div>
+                </div>
+                <div class="note-group">
+                    <div class="note">♬</div>
+                    <div class="note">♫</div>
+                </div>
+            </div>
+        </div>
     </div>
-  
-    <img id="musical-line" class="fade-in" src="/static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
-    <span id="artists"></span>
-    <h1 id="m-t-header-text" class="fade-in">Artists</h1>
-    <ul class="m-t-container">
-        <li class="m-t-item slide-in-left">
-            <img src="/static/images/boykopfp.png" alt="BZ">
-            <p class="name-a">Boiko Tsvetanov</p>
-            <a style="cursor: pointer;" class="read-more-a" 
-            data-modal-content=
-            "Boyko Tsvetanov is one of the greatest and most successful Bulgarian tenors of all time. He is the first, most famous and beloved student of BORIS HRISTOV.">
-            Read more
-          </a>
-        </li>
-        <li class="m-t-item slide-in-left">
-            <img src="/static/images/stoyanpfp.jpeg" alt="SB">
-            <p class="name-a">Stoyan Bonchev</p>
-            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
-            "Stoyan Bonchev is an opera bass and chairman of the Boris Hristov Foundation. His repertoire is extremely rich and includes both operatic arias and classical works, as well as melodic evergreens, folk songs and author's music. He participated in over 500 concerts in more than 15 countries. Stoyan Bonchev has a master's degree in opera singing from the class of our great opera prima Hristina Angelakova, after which he specialized in Zurich with Maestro Boyko Tsvetanov.">Read more
-            </a>
-        </li>
-        <li class="m-t-item slide-in-left">
-            <img src="/static/images/alexpfp.jpg" alt="AZ">
-            <p class="name-a">Alex Zografov</p>
-            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
-            "Maestro Alex Zografov is one of the great pianists, composers and arrangers of our time. Maestro Zografov holds a PhD in composition from the University of Los Angeles and has worked for decades at the highest level with mega stars such as George Benson, Janet Jackson, Andrew Lloyd Webber, Joe Cocker, Nana Muscouri, Georgius Dalaras, Frank Zappa and many others. Maestro Zografov is the artistic director of the Boris Hristov Foundation">
-            Read more
-            </a>
-        </li>
-        <li class="m-t-item slide-in-left">
-            <img src="/static/images/krumpfp.jpeg" alt="KG">
-            <p class="name-a">Krum Galabov</p>
-            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
-            "Krum Galabov is a baritone with over 20 years of successful career on international opera stages. He graduated in music in Vienna and has in his repertoire over 30 central opera parts, as well as hundreds of songs, romances and canzonets. Krum Galabov is also the founder of the Omega Music Management Agency, which is a partner of the Boris Hristov Foundation.">
-            Read more
-            </a>
-        </li>
-        <li class="m-t-item slide-in-left">
-            <img src="/static/images/Borispfp.jpeg" alt="BL">
-            <p class="name-a">Boris Lukov</p>
-            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
-            "Boris Lukov is a Bulgarian tenor - a long-time soloist of the Ruse State Opera, as well as a guest soloist at almost all opera houses in Bulgaria. His repertoire is extremely rich and includes both operatic arias and parts, as well as world-famous evangelical, Russian songs and Italian canzonets.">
-            Read more
-            </a>
-        </li>
-        <li class="m-t-item slide-in-left">
-            <img src="/static/images/albenapfp.jpeg" alt="BL">
-            <p class="name-a">Albena Veskova</p>
-            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
-            "Albena Veskova is among the greatest Bulgarian folk singers of the last 20 years. Graduate of &quot;Shiroka Laka&quot;, soloist of the Mysteries of Bulgarian Voices, soloist of the ensemble Bulgare, long-time TV presenter, soloist of &quot;Painer&quot; - one of the most beautiful and recognizable voices in our folk music.">
-            Read more
-            </a>
-        </li>
-        <li class="m-t-item slide-in-left">
-            <img src="/static/images/a&tpfp.jpeg" alt="AT">
-            <p class="name-a">Anastasia and Teodora</p>
-            <a style="cursor: pointer;" class="read-more-a" data-modal-content=
-            "Anastasia Balabanova and Teodora Zaneva are a young duo who are yet to develop their full potential. Former graduates of radio choirs, they are extremely musical and have wonderful vocal abilities. They have a wide repertoire of pop, rock, pop and stylized folk songs.">
-            Read more
-            </a>
-        </li>
-      </ul>
+    <section class="team-section">
+        <div class="section-title-wrapper">
+            <h1 class="section-title fade-in">Management And Team</h1>
+        </div>
+        <div class="team-grid">
+            <div class="team-card slide-in-left" data-member-id="stoyan">
+                <div class="card-image">
+                    <img src="/static/images/stoyanpfp.jpeg" alt="Stoyan Bonchev">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>Stoyan Bonchev</h3>
+                    <span class="position">Chairman</span>
+                    <button class="read-more-btn" onclick="openModal('stoyan')">
+                        <span>Read More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="team-card slide-in-left" data-member-id="boiko">
+                <div class="card-image">
+                    <img src="/static/images/boykopfp.png" alt="Boiko Tsvetanov">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>Boiko Tsvetanov</h3>
+                    <span class="position">Founder</span>
+                    <button class="read-more-btn" onclick="openModal('boiko')">
+                        <span>Read More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="team-card slide-in-left" data-member-id="chence">
+                <div class="card-image">
+                    <img src="/static/images/chencepfp.jpeg" alt="Nikolai Angelov">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>Nikolai Angelov</h3>
+                    <span class="position">CEO</span>
+                    <button class="read-more-btn" onclick="openModal('chence')">
+                        <span>Read More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="team-card slide-in-left" data-member-id="alex">
+                <div class="card-image">
+                    <img src="/static/images/alexpfp.jpg" alt="Alex Zografov">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>Alex Zografov</h3>
+                    <span class="position">Art Director</span>
+                    <button class="read-more-btn" onclick="openModal('alex')">
+                        <span>Read More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <img id="musical-line" class="fade-in" src="/static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
-      {% include '/includes/footer.html' %}
+    <section class="artists-section">
+        <div class="section-title-wrapper">
+            <h1 class="section-title fade-in">Artists</h1>
+        </div>
+        <div class="artists-grid">
+            <div class="artist-card slide-in-left" data-artist="krum">
+                <div class="card-image">
+                    <img src="/static/images/krumpfp.jpeg" alt="Krum Galabov">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>Krum Galabov</h3>
+                    <button class="read-more-btn" onclick="openModal('krum')">
+                        <span>Read More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="artist-card slide-in-left" data-artist="boris">
+                <div class="card-image">
+                    <img src="/static/images/Borispfp.jpeg" alt="Boris Lukov">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>Boris Lukov</h3>
+                    <button class="read-more-btn" onclick="openModal('boris')">
+                        <span>Read More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="artist-card slide-in-left" data-artist="alben">
+                <div class="card-image">
+                    <img src="/static/images/albenapfp.jpeg" alt="Albena Veskova">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>Albena Veskova</h3>
+                    <button class="read-more-btn" onclick="openModal('alben')">
+                        <span>Read More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="artist-card slide-in-left" data-artist="a&t">
+                <div class="card-image">
+                    <img src="/static/images/a&tpfp.jpeg" alt="Anastasia and Teodora">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>Anastasia and Teodora</h3>
+                    <button class="read-more-btn" onclick="openModal('a&t')">
+                        <span>Read More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="bioModal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="modal-content">
+                    <span id="modalPosition" class="modal-position"></span>
+                    <div id="modalBio" class="modal-bio"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include '/includes/footer.html' %}
 </body>
 </html>

@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Admin - Add News{% endblock %}
+
+{% block admin_content %}
+<h1 class="dashboard-title">Add News Article</h1>
+
+<div class="admin-form-container">
+    <form method="POST" enctype="multipart/form-data" class="admin-form">
+        {{ form.csrf_token }}
+        
+        <div class="form-group">
+            <label class="form-label" for="title">Title</label>
+            {{ form.title(class="form-control") }}
+            {% if form.title.errors %}
+                {% for error in form.title.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="description">Description</label>
+            {{ form.description(class="form-control") }}
+            {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="emoji">Emoji</label>
+            {{ form.emoji(class="form-control") }}
+            {% if form.emoji.errors %}
+                {% for error in form.emoji.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="image">Image</label>
+            {{ form.image(class="form-control") }}
+            {% if form.image.errors %}
+                {% for error in form.image.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="checkbox-label">
+                {{ form.featured() }}
+                Feature this article
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Add News</button>
+            <a href="{{ url_for('admin_news') }}" class="btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %} 

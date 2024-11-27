@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include '/includes/head.html' %}
+    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="/static/styles/navbar.css">
+    {% if request.path.startswith('/admin') %}
+        <link rel="stylesheet" href="/static/styles/admin-board.css">
+        <link rel="stylesheet" href="/static/styles/admin.css">
+    {% endif %}
+    <title>{% block title %}{% endblock %}</title>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% if request.endpoint == 'index' %}is-index{% endif %}">
+    {% if request.path.startswith('/admin') and current_user.is_authenticated and current_user.admin %}
+        {% include '/includes/admin_navbar.html' %}
+    {% else %}
+        {% include '/includes/navbar.html' %}
+    {% endif %}
+    
+    <div class="{% if request.path.startswith('/admin') %}admin-content{% else %}container{% endif %}">
+        <div id="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}" role="alert">
+                        <div class="flash-content">
+                            <span class="flash-icon">
+                                {% if category == 'success' %}
+                                    <i class="fas fa-check-circle"></i>
+                                {% elif category == 'error' %}
+                                    <i class="fas fa-exclamation-circle"></i>
+                                {% else %}
+                                    <i class="fas fa-info-circle"></i>
+                                {% endif %}
+                            </span>
+                            <span class="flash-text">{{ message }}</span>
+                        </div>
+                        <button type="button" class="flash-close" onclick="this.parentElement.remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="flash-progress"></div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        {% block content %}{% endblock %}
+    </div>
+
+    {% include '/includes/footer.html' %}
+    
+    {% block scripts %}{% endblock %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(message => {
+                // Start the progress bar animation
+                const progress = message.querySelector('.flash-progress');
+                progress.style.width = '100%';
+                
+                // Remove the message after 5 seconds
+                setTimeout(() => {
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        message.remove();
+                    }, 300);
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html> 

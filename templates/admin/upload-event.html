@@ -1,120 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include '/includes/head.html' %}
-    <link rel="stylesheet" href="/static/styles/main.css">
-    <link rel="stylesheet" href="/static/styles/admin-board.css">
-    <link rel="stylesheet" href="/static/styles/events.css">
-    <title>Upload Event</title>
-    <style>
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        .update-event-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 0;
-        }
-    </style>
-</head>
-<body>
-    {% include '/includes/navbar.html' %}
-    <h1>Upload Event</h1>
-    <form id="upload-event-form" action="/admin/upload-event" method="POST" enctype="multipart/form-data">
+{% extends "admin/base.html" %}
+
+{% block title %}Admin - Add Event{% endblock %}
+
+{% block admin_content %}
+<h1 class="dashboard-title">Add New Event</h1>
+
+<div class="admin-form-container">
+    <form method="POST" enctype="multipart/form-data" class="admin-form">
         {{ form.hidden_tag() }}
-        <label for="name">Event Name</label>
-        {{ form.name(class="input-primary") }}
-        <label for="summary">Summary</label>
-        {{ form.summary(class="textarea-primary") }}
-        <label for="picture">Picture</label>
-        {{ form.picture(class="file-input") }}
-        <label for="description">Description</label>
-        {{ form.description(class="textarea-primary") }}
-        <button type="submit" class="btn" style="background-color: #f5494c;">Upload Event</button>
+        
+        <div class="form-group">
+            <label class="form-label" for="name">Event Name</label>
+            {{ form.name(class="form-control") }}
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="summary">Summary</label>
+            {{ form.summary(class="form-control") }}
+            {% if form.summary.errors %}
+                {% for error in form.summary.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="date">Date</label>
+            {{ form.date(class="form-control") }}
+            {% if form.date.errors %}
+                {% for error in form.date.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="picture">Event Image</label>
+            {{ form.picture(class="form-control") }}
+            {% if form.picture.errors %}
+                {% for error in form.picture.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="description">Description</label>
+            {{ form.description(class="form-control") }}
+            {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-actions">
+            {{ form.submit(class="btn-primary") }}
+            <a href="{{ url_for('admin_events') }}" class="btn-secondary">Cancel</a>
+        </div>
     </form>
+</div>
 
-    <ul class="grid-container">
-        {% for event in events %}
-        <li class="grid-item" id="event-{{ event.id }}">
-            <img src="{{ url_for('static', filename='files/uploaded_pictures/' ~ event.picture) }}" alt="{{ event.name }} picture">
-            <h2>{{ event.name }}</h2>
-            <p>{{ event.summary }}</p>
-            <div class="button-container">
-                <button class="btn see-more-btn" data-event-id="{{ event.id }}">See More</button>
-                <form id="update-event-form-{{ event.id }}" class="update-event-form">
-                    <input type="hidden" name="event_id" value="{{ event.id }}">
-                    <button type="button" class="btn update-event-btn" style="width: 10rem;">Update Event</button>
-                </form>
-                <button class="btn delete-event-btn" data-event-id="{{ event.id }}">Delete Event</button>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
-
-    <div id="event-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modal-event-name"></h2>
-            <p id="modal-event-date"></p>
-            <p id="modal-event-description"></p>
+{% if events %}
+<div class="admin-list">
+    <h2 class="section-title">Recent Events</h2>
+    {% for event in events %}
+    <div class="admin-list-item">
+        <div class="event-preview">
+            {% if event.picture %}
+            <img src="{{ event.picture }}" alt="{{ event.name }}" class="event-image-preview">
+            {% endif %}
+        </div>
+        <div class="event-details">
+            <h3>{{ event.name }}</h3>
+            <p class="event-date">{{ event.date.strftime('%B %d, %Y at %H:%M') }}</p>
+            <p class="event-summary">{{ event.summary }}</p>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.see-more-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const eventId = this.getAttribute('data-event-id');
-                    showEventModal(eventId);
-                });
-            });
-
-            document.querySelectorAll('.update-event-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const form = this.closest('.update-event-form');
-                    const eventId = form.querySelector('input[name="event_id"]').value;
-                    window.location.href = `/admin/update-event/${eventId}`;
-                });
-            });
-
-            document.querySelectorAll('.delete-event-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const eventId = this.getAttribute('data-event-id');
-                    deleteEvent(eventId);
-                });
-            });
-        });
-
-        function deleteEvent(eventId) {
-            if (confirm('Are you sure you want to delete this event?')) {
-                fetch(`/admin/delete-event/${eventId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRFToken': getCsrfToken()
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        document.getElementById(`event-${eventId}`).remove();
-                        alert('Event deleted successfully!');
-                    } else {
-                        throw new Error('Failed to delete event');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Failed to delete event. Please try again.');
-                });
-            }
-        }
-
-        function getCsrfToken() {
-            return document.querySelector('input[name="csrf_token"]').value;
-        }
-    </script>
-</body>
-</html>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

@@ -8,20 +8,47 @@
 <html>
 <body>
     {% include '/includes/navbar.html' %}
-    <div class="partners-header">
-        <h1 class="fade-in">Our Amazing Partners</h1>
-        <p class="slide-in-left">Discover the wonderful organizations we collaborate with!</p>
+    
+    <div class="partners-container">
+        <div class="partners-header">
+            <h1 class="fade-in">Our Partners</h1>
+            <p class="slide-in-left">Working together to create amazing experiences</p>
+        </div>
+
+        <div class="partners-grid">
+            {% for partner in partners %}
+            <div class="partner-card" data-aos="fade-up">
+                <div class="partner-logo">
+                    {% if partner.logo %}
+                        <img src="{{ partner.logo }}" 
+                             alt="{{ partner.name }} logo"
+                             loading="lazy"
+                             onerror="this.src='/static/images/placeholder-logo.png'">
+                    {% else %}
+                        <img src="/static/images/placeholder-logo.png" 
+                             alt="{{ partner.name }} logo"
+                             loading="lazy">
+                    {% endif %}
+                </div>
+                <div class="partner-info">
+                    <h2>{{ partner.name }}</h2>
+                    <a href="{{ partner.website }}" 
+                       class="partner-link" 
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                        Visit Website
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    <img id="musical-line" class="fade-in" src="/static/images/muscialnotesline-removebg-preview.png" alt="musicalLine">
-    <ul class="grid-container">
-        {% for partner in partners %}
-        <li class="grid-item slide-in-left">
-            <img src="{{ url_for('static', filename='files/uploaded_pictures/' ~ partner.logo) }}" alt="{{ partner.name }} logo">
-            <h2>{{ partner.name }}</h2>
-            <a href="{{ partner.website }}" target="_blank">Visit Website</a>
-        </li>
-        {% endfor %}
-    </ul>
+
     {% include '/includes/footer.html' %}
 </body>
 </html>

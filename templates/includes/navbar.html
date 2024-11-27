@@ -1,118 +1,39 @@
-<ul class="nav-container">
-    <div class="logo-container">
-        <img id="boris-head" src="/static/images/borisHead.png" alt="logo">
-        <a href="/"><img src="/static/images/imagehomobacklogoscaled.png" alt="Logo"></a>
-    </div>
-    <div class="link-container">
-        <li class="nav-item">
-            <a href="/">Home</a>
-        </li>
-        <li class="nav-item">
-            <a href="/who-we-are" class="dropdown-start">
-                <span class="arrow-container">
-                    <svg id="arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-up arrow-container" viewBox="0 0 16 16">
-                        <path d="M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659"/>
-                    </svg>
-                </span>
-                Who We Are
-            </a>              
-            <ul class="dropdown">
-                <li class="dropdown-item">
-                    <a href="/who-we-are#mission-vision">Mission And Vision</a>
-                </li>
-                <li class="dropdown-item">
-                    <a href="/who-we-are#our-story">Our Story</a>
-                </li>
-                <li class="dropdown-item">
-                    <a href="/who-we-are#management-and-team">Management And Team</a>
-                </li>
-                <li class="dropdown-item">
-                    <a href="/who-we-are#artists">Artists</a>
-                </li>
-            </ul> 
-        </li>
-        <li class="nav-item">
-            <a href="#" class="dropdown-start">
-                <span class="arrow-container">
-                    <svg id="arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-up arrow-container" viewBox="0 0 16 16">
-                        <path d="M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659"/>
-                    </svg>
-                </span>
-                Projects
-            </a>              
-            <ul class="dropdown">
-                <li class="dropdown-item">
-                    <a href="#">Sport VS Aggression</a>
-                </li>
-                <li class="dropdown-item">
-                    <a href="#">Togheter - Sport & Art</a>
-                </li>
-            </ul> 
-        </li>
-        <li class="nav-item">
-            <a href="/events">Events</a>
-        </li>  
-        <li class="nav-item">
-            <a href="/partners">Partners</a>
-        </li>  
-    </div>    
-    <div class="burger-icon-container">
-        <a id="burger-icon">
-            <svg id="burger-svg" xmlns="http://www.w3.org/2000/svg" width="52" height="52" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-            </svg>
-            <svg id="cross-svg" xmlns="http://www.w3.org/2000/svg" width="52" height="52" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" style="display: none;">
-                <path fill-rule="evenodd" d="M14.354 1.646a.5.5 0 0 1 0 .708L8.707 8l5.647 5.646a.5.5 0 1 1-.708.708L8 8.707l-5.646 5.647a.5.5 0 0 1-.708-.708L7.293 8 .646 2.354a.5.5 0 0 1 .708-.708L8 7.293l5.646-5.647a.5.5 0 0 1 .708 0z"/>
-            </svg>
+<nav class="navbar">
+    <div class="navbar-container">
+        <a href="/" class="nav-logo">
+            <img src="/static/images/logo.png" alt="Logo" class="nav-logo-img">
         </a>
+
+        <div class="nav-links">
+            <a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="/events" class="nav-link"><i class="fas fa-calendar-alt"></i> Events</a>
+            <a href="/news" class="nav-link"><i class="fas fa-newspaper"></i> News</a>
+            <a href="/who-we-are" class="nav-link"><i class="fas fa-users"></i> Who We Are</a>
+            <a href="/partners" class="nav-link"><i class="fas fa-handshake"></i> Partners</a>
+            <a href="/contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="/donate" class="nav-donate"><i class="fas fa-heart"></i> Donate</a>
+        </div>
+
+        <button 
+        type="button" 
+        class="mobile-menu-btn" 
+        aria-label="Toggle mobile menu" 
+        aria-expanded="false" 
+        aria-controls="mobile-nav">
+        <span class="burger"></span>
+        </button>
     </div>
-    <ul class="nav-mobile-container">
-        <li class="nav-item-m">
-            <a href="/">Home</a>
-        </li>
-        <li class="nav-item-m">
-            <a href="/who-we-are" class="dropdown-start-m">
-                Who We Are
-                <svg id="arrow-right-1" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-caret-right dropdown-svg" viewBox="0 0 16 16">
-                    <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
-                </svg>
-            </a>
-            <ul class="dropdown-m">
-                <li class="dropdown-item-m">
-                    <a href="/who-we-are#mission-vision">Mission And Vision</a>
-                </li>
-                <li class="dropdown-item-m">
-                    <a href="/who-we-are#our-story">Our Story</a>
-                </li>
-                <li class="dropdown-item-m">
-                    <a href="/who-we-are#management-and-team">Management And Team</a>
-                </li>
-                <li class="dropdown-item-m">
-                    <a href="/who-we-are#artists">Artists</a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item-m">
-            <a href="#" class="dropdown-start-m">
-                Projects
-                <svg id="arrow-right-2" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-caret-right dropdown-svg" viewBox="0 0 16 16">
-                    <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
-                </svg>
-            </a>
-            <ul class="dropdown-m">
-                <li class="dropdown-item-m">
-                    <a href="#">Sport VS Aggression</a>
-                </li>
-                <li class="dropdown-item-m">
-                    <a href="#">Together - Sport & Art</a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item-m">
-            <a href="/events">Events</a>
-        </li>
-        <li class="nav-item-m">
-            <a href="/partners">Partners</a>
-        </li>
-    </ul>     
-</ul>
+
+    <div class="mobile-nav">
+        <div class="nav-links">
+            <a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="/events" class="nav-link"><i class="fas fa-calendar-alt"></i> Events</a>
+            <a href="/news" class="nav-link"><i class="fas fa-newspaper"></i> News</a>
+            <a href="/who-we-are" class="nav-link"><i class="fas fa-users"></i> Who We Are</a>
+            <a href="/partners" class="nav-link"><i class="fas fa-handshake"></i> Partners</a>
+            <a href="/contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="/donate" class="nav-donate"><i class="fas fa-heart"></i> Donate</a>
+        </div>
+    </div>
+    <div class="mobile-nav-overlay"></div>
+</nav>

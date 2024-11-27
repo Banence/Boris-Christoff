@@ -1,0 +1,493 @@
+/* Admin Dashboard */
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.dashboard-title {
+    font-size: 2.5rem;
+    color: var(--color-hover-secondary);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-hover-secondary);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.card-icon svg {
+    color: white;
+}
+
+/* Forms */
+.admin-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+}
+
+/* Tables */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.admin-table th {
+    background: var(--color-primary-bg);
+    color: white;
+    font-weight: 500;
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--color-hover-secondary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: var(--color-hover-primary);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+/* Lists */
+.admin-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.admin-list-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 1rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* Add these styles to your existing admin.css */
+
+.admin-actions {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.partner-preview {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.partner-logo-preview {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.partner-details {
+    flex: 1;
+    padding: 1rem;
+}
+
+.partner-website {
+    color: var(--color-hover-secondary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.partner-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.current-logo {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.current-logo p {
+    margin-bottom: 0.5rem;
+    color: var(--color-text-secondary);
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .admin-list-item {
+        flex-direction: column;
+    }
+
+    .partner-preview {
+        width: 100%;
+        height: 200px;
+    }
+
+    .partner-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+/* Event and News Previews */
+.event-preview,
+.news-preview {
+    width: 200px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.event-image-preview,
+.news-image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-details,
+.news-details {
+    flex: 1;
+    padding: 1rem;
+}
+
+.event-date,
+.news-date {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    margin: 0.5rem 0;
+}
+
+.event-summary,
+.news-description {
+    color: var(--color-text-primary);
+    margin: 0.5rem 0;
+    line-height: 1.5;
+}
+
+.news-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.featured-badge {
+    background: var(--color-hover-secondary);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.event-actions,
+.news-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* List Items */
+.admin-list-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-list-item {
+        flex-direction: column;
+    }
+
+    .event-preview,
+    .news-preview {
+        width: 100%;
+        height: 200px;
+    }
+
+    .event-actions,
+    .news-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* Add these to your existing admin.css */
+
+.admin-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-hover-secondary);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--color-hover-secondary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(245, 73, 76, 0.1);
+}
+
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Date input specific styling */
+input[type="datetime-local"].form-control {
+    padding: 0.6rem 0.75rem;
+}
+
+/* Add these styles to your existing admin.css */
+
+#flash-messages {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+}
+
+.flash-message {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    animation: slideIn 0.3s ease-out;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.flash-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-right: 24px;
+}
+
+.flash-icon {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.flash-success .flash-icon {
+    color: #10B981;
+}
+
+.flash-error .flash-icon {
+    color: #EF4444;
+}
+
+.flash-info .flash-icon {
+    color: #3B82F6;
+}
+
+.flash-text {
+    color: #1F2937;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.flash-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #6B7280;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.flash-close:hover {
+    color: #1F2937;
+}
+
+.flash-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: currentColor;
+    transition: width 5s linear;
+    width: 0;
+}
+
+.flash-success .flash-progress {
+    background: #10B981;
+}
+
+.flash-error .flash-progress {
+    background: #EF4444;
+}
+
+.flash-info .flash-progress {
+    background: #3B82F6;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+} 

@@ -1,0 +1,113 @@
+{% include '/includes/head.html' %}
+<link rel="stylesheet" href="/static/styles/boris-christoff.css">
+<title>{{ Title }}</title>
+</head>
+<body>
+    {% include '/includes/navbar.html' %}
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 data-aos="fade-up">Борис Христов</h1>
+            <p data-aos="fade-up" data-aos-delay="200">Един от най-великите български и световни оперни певци</p>
+        </div>
+    </div>
+
+    <div class="biography-container">
+        <div class="biography-section" data-aos="fade-up">
+            <div class="biography-image">
+                <img src="/static/images/BorisChristoffBrownBG.jpg" alt="Борис Христов">
+            </div>
+            <div class="biography-content">
+                <h2>Същност и принос</h2>
+                <p>Борис Христов е един от най-великите български и световни оперни певци, известен със своя мощен и дълбок бас, изключителна артистичност и невероятно сценично присъствие. Изпълненията му в роли като Борис Годунов, Филип II (в "Дон Карлос"), Мефистофел и Досифей се считат за ненадминати.</p>
+                <div class="biography-stats">
+                    <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                        <span class="stat-number" data-value="60">60</span>
+                        <span class="stat-label">Оперни роли</span>
+                    </div>
+                    <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                        <span class="stat-number" data-value="63">63</span>
+                        <span class="stat-label">Песни на Мусоргски</span>
+                    </div>
+                    <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                        <span class="stat-number" data-value="2">2</span>
+                        <span class="stat-label">Музикални академии</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="artistic-legacy-section">
+            <h2 data-aos="fade-up">Артистично наследство</h2>
+            <div class="legacy-grid">
+                <div class="legacy-card">
+                    <div class="legacy-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>Оперен артист</h3>
+                    <p>Участва в над 60 оперни роли и множество църковни и камерни произведения, които оставят трайна следа в музикалната история.</p>
+                </div>
+                <div class="legacy-card">
+                    <div class="legacy-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Вдъхновител</h3>
+                    <p>Дарява своите домове в Рим и София за създаването на музикални академии, предназначени за подготовка на млади таланти.</p>
+                </div>
+                <div class="legacy-card">
+                    <div class="legacy-icon">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <h3>Патриот</h3>
+                    <p>Дори живеейки предимно извън България, Христов никога не прекъсва връзката със страната си и остава верен на нейната култура.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="achievements-section">
+            <h2 data-aos="fade-up">Творчески постижения</h2>
+            <div class="achievements-grid">
+                <div class="achievement-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-record-vinyl"></i>
+                    <h3>Дискография</h3>
+                    <p>Първият певец, който записва всички 63 песни на Модест Мусоргски, като сам анализира произведенията в специален албум.</p>
+                </div>
+                <div class="achievement-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-microphone-alt"></i>
+                    <h3>Личен стил</h3>
+                    <p>Комбинира традиционното и иновативното в пеенето, използвайки изключителни тембри, динамики и самоизразяване.</p>
+                </div>
+                <div class="achievement-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-star"></i>
+                    <h3>Влияние</h3>
+                    <p>Вдъхновение за поколения български и световни оперни певци, като Николай Гяуров и Никола Гюзелев.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="legacy-section">
+            <div class="legacy-content">
+                <h2>Духовно наследство</h2>
+                <p>Поставя музикалното и духовно развитие над всичко друго, създавайки нови стандарти в певческото изкуство. Неговите записи и изпълнения са считани за културни събития, изграждащи връзка между българското музикално наследство и световната сцена.</p>
+                <a href="#" class="legacy-button">
+                    <span>Научете повече</span>
+                </a>
+            </div>
+            <div class="legacy-image">
+                <img src="/static/images/borisChristoffB&W.jpg" alt="Борис Христов изпълнение">
+            </div>
+        </div>
+    </div>
+
+    {% include '/includes/footer.html' %}
+    
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            offset: 100,
+            once: true
+        });
+    </script>
+    <script src="/static/scripts/boris-christoff.js"></script>
+</body>
+</html> 

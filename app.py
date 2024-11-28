@@ -705,6 +705,10 @@ def add_news():
 
     return render_template('admin/add_news.html', form=form)
 
+@app.route('/boris-christoff')
+def boris_christoff():
+    return render_template('boris-christoff.html', Title='Boris Christoff')
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

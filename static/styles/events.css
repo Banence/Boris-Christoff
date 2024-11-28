@@ -471,19 +471,48 @@
     font-size: 1.1rem;
 }
 
-/* Custom Scrollbar */
-.modal-info::-webkit-scrollbar {
+/* Enhanced Modern Modal Scrollbar */
+.modal-info::-webkit-scrollbar,
+.event-modal::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
 }
 
-.modal-info::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
+.modal-info::-webkit-scrollbar-track,
+.event-modal::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 4px 0;
 }
 
-.modal-info::-webkit-scrollbar-thumb {
-    background: var(--color-hover-secondary);
-    border-radius: 3px;
+.modal-info::-webkit-scrollbar-thumb,
+.event-modal::-webkit-scrollbar-thumb {
+    background: rgba(var(--color-hover-secondary-rgb), 0.3);
+    border-radius: 100vh;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.3s ease;
+}
+
+.modal-info::-webkit-scrollbar-thumb:hover,
+.event-modal::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--color-hover-secondary-rgb), 0.5);
+}
+
+/* For Firefox */
+.modal-info,
+.event-modal {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--color-hover-secondary-rgb), 0.3) transparent;
+}
+
+/* Hide scrollbar when not hovering */
+.modal-info,
+.event-modal {
+    transition: scrollbar-color 0.3s ease;
+}
+
+.modal-info:hover,
+.event-modal:hover {
+    scrollbar-color: rgba(var(--color-hover-secondary-rgb), 0.5) transparent;
 }
 
 /* Responsive Design */
@@ -687,22 +716,4 @@ body.events-page .navbar:not(.scrolled) .logo {
 
 .modal-content {
     padding: 2rem;
-}
-
-/* Scrollbar styling for modal */
-.event-modal::-webkit-scrollbar {
-    width: 8px;
-}
-
-.event-modal::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.event-modal::-webkit-scrollbar-thumb {
-    background: var(--color-hover-secondary);
-    border-radius: 4px;
-}
-
-.event-modal::-webkit-scrollbar-thumb:hover {
-    background: var(--color-secondary);
 }

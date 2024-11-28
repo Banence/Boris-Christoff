@@ -1,0 +1,806 @@
+/* Add these new modern variables at the top */
+:root {
+    --spacing-unit: 8px;
+    --content-width: min(1400px, 90vw);
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    --card-hover-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+}
+
+/* Add these navbar styles at the top */
+.navbar {
+    transition: all 0.3s ease;
+}
+
+.navbar.transparent {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+
+/* Add these new animation keyframes at the top */
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Enhanced Hero Section */
+.hero-section {
+    height: 100vh;
+    min-height: 600px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('/static/images/licensed-image.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: -120px;
+}
+
+.hero-content {
+    max-width: 900px;
+    padding: 0 2rem;
+    z-index: 2;
+    margin-top: 80px;
+}
+
+.hero-content h1 {
+    font-size: 6rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+.hero-content p {
+    font-size: 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 0.3s;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1s;
+}
+
+.scroll-text {
+    color: white;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.scroll-line {
+    width: 2px;
+    height: 60px;
+    background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-hover-secondary);
+    animation: scrollLine 2.5s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+}
+
+/* Biography Section Enhancements */
+.biography-container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: calc(var(--spacing-unit) * 12) calc(var(--spacing-unit) * 4);
+}
+
+.biography-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--spacing-unit) * 8);
+    align-items: center;
+    margin-bottom: calc(var(--spacing-unit) * 12);
+    position: relative;
+}
+
+.biography-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 40px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.5s var(--transition-smooth);
+}
+
+.biography-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom right, rgba(var(--color-hover-secondary-rgb), 0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.biography-image:hover::after {
+    opacity: 1;
+}
+
+.biography-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--transition-smooth);
+}
+
+.biography-image:hover img {
+    transform: scale(1.1) rotate(2deg);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.biography-content h2 {
+    font-size: clamp(2.5rem, 5vw, 3rem);
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    color: var(--color-text);
+}
+
+.biography-content p {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+}
+
+.biography-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: calc(var(--spacing-unit) * 3);
+    margin-top: calc(var(--spacing-unit) * 6);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: calc(var(--spacing-unit) * 4);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.4s var(--transition-smooth);
+}
+
+.stat-item:hover {
+    transform: translateY(-10px);
+}
+
+.stat-number {
+    display: block;
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--color-primary-bg), var(--color-hover-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    position: relative;
+    line-height: 1;
+}
+
+.stat-number::after {
+    content: '+';
+    position: absolute;
+    right: -20px;
+    top: 0;
+    font-size: 2rem;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.5s var(--transition-smooth) forwards 2s;
+}
+
+.stat-label {
+    display: block;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Achievements Section */
+.achievements-section {
+    margin-bottom: 6rem;
+    text-align: center;
+}
+
+.achievements-section h2 {
+    font-size: 3rem;
+    margin-bottom: 4rem;
+    color: var(--color-text);
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+}
+
+.achievement-card {
+    padding: 3rem 2rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    transform: translateY(0);
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.achievement-card:hover {
+    transform: translateY(-15px);
+}
+
+.achievement-card i {
+    font-size: 2.5rem;
+    color: var(--color-hover-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.achievement-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+.achievement-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Enhanced Legacy Grid Section */
+.artistic-legacy-section {
+    padding: calc(var(--spacing-unit) * 8) 0;
+}
+
+.artistic-legacy-section h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 8);
+    color: var(--color-primary-bg);
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.legacy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: calc(var(--spacing-unit) * 4);
+    margin: 4rem 0;
+    padding: 0 calc(var(--spacing-unit) * 2);
+}
+
+.legacy-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: calc(var(--spacing-unit) * 6);
+    border-radius: 30px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.6s var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.legacy-card.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.legacy-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(var(--color-hover-secondary-rgb), 0.1),
+        rgba(107, 70, 193, 0.1));
+    opacity: 0;
+    transition: opacity 0.4s var(--transition-smooth);
+}
+
+.legacy-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.legacy-card:hover::before {
+    opacity: 1;
+}
+
+.legacy-icon {
+    width: 90px;
+    height: 90px;
+    background: rgba(var(--color-hover-secondary-rgb), 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    transition: all 0.5s var(--transition-smooth);
+}
+
+.legacy-card:hover .legacy-icon {
+    background: var(--color-hover-secondary);
+    transform: rotateY(360deg) scale(1.1);
+}
+
+.legacy-icon i {
+    font-size: 2.8rem;
+    color: var(--color-hover-secondary);
+    transition: all 0.5s var(--transition-smooth);
+}
+
+.legacy-card:hover .legacy-icon i {
+    color: white;
+}
+
+.legacy-card h3 {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    margin-bottom: calc(var(--spacing-unit) * 3);
+    color: var(--color-text);
+    font-weight: 700;
+    transition: all 0.3s var(--transition-smooth);
+}
+
+.legacy-card:hover h3 {
+    color: var(--color-hover-secondary);
+}
+
+.legacy-card p {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    line-height: 1.8;
+    color: #666;
+    margin: 0;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scrollLine {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 1200px) {
+    .legacy-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-content h1 {
+        font-size: 4.5rem;
+    }
+
+    .biography-section {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .biography-image {
+        max-height: 500px;
+    }
+
+    .legacy-section {
+        grid-template-columns: 1fr;
+        gap: calc(var(--spacing-unit) * 4);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.6rem;
+    }
+
+    .legacy-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .achievements-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .biography-stats {
+        gap: calc(var(--spacing-unit) * 2);
+    }
+
+    .stat-item {
+        padding: calc(var(--spacing-unit) * 3);
+    }
+
+    .stat-number {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+    }
+
+    .stat-label {
+        font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    }
+
+    .legacy-card h3 {
+        margin-bottom: calc(var(--spacing-unit) * 2);
+    }
+
+    .legacy-card p {
+        line-height: 1.6;
+    }
+
+    .artistic-legacy-section {
+        padding: calc(var(--spacing-unit) * 6) 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-content h1 {
+        font-size: 2.8rem;
+    }
+
+    .hero-content p {
+        font-size: 1.3rem;
+    }
+
+    .biography-container {
+        padding: 4rem 1rem;
+    }
+
+    .biography-stats {
+        grid-template-columns: repeat(1, 1fr);
+        max-width: 300px;
+        margin: calc(var(--spacing-unit) * 4) auto 0;
+        gap: calc(var(--spacing-unit) * 3);
+    }
+
+    .stat-item {
+        padding: calc(var(--spacing-unit) * 4);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        margin-bottom: calc(var(--spacing-unit) * 1.5);
+    }
+
+    .stat-label {
+        font-size: 1rem;
+    }
+
+    .legacy-card {
+        padding: calc(var(--spacing-unit) * 4);
+    }
+
+    .legacy-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: calc(var(--spacing-unit) * 3);
+    }
+
+    .legacy-icon i {
+        font-size: 2rem;
+    }
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Add smooth transitions to all interactive elements */
+a, button, .legacy-icon, .achievement-card i {
+    transition: all 0.4s var(--transition-smooth);
+}
+
+/* Enhanced Spiritual Legacy Section */
+.legacy-section {
+    padding: calc(var(--spacing-unit) * 8) 0;
+    margin-top: calc(var(--spacing-unit) * 8);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--spacing-unit) * 6);
+    align-items: center;
+}
+
+.legacy-section .legacy-content {
+    opacity: 0;
+    transform: translateX(-30px);
+}
+
+.legacy-section .legacy-content.animate {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.8s var(--transition-smooth);
+}
+
+.legacy-section .legacy-image {
+    opacity: 0;
+    transform: translateX(30px);
+}
+
+.legacy-section .legacy-image.animate {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.8s var(--transition-smooth) 0.2s;
+}
+
+.legacy-section h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    color: var(--color-primary-bg);
+}
+
+.legacy-section p {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+}
+
+.legacy-button {
+    display: inline-block;
+    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 4);
+    background: linear-gradient(to right, var(--color-primary-bg), var(--color-hover-secondary));
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    transition: all 0.5s var(--transition-smooth);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.legacy-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, var(--color-hover-secondary), var(--color-primary-bg));
+    opacity: 0;
+    transition: opacity 0.5s var(--transition-smooth);
+}
+
+.legacy-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(var(--color-hover-secondary-rgb), 0.3);
+}
+
+.legacy-button:hover::before {
+    opacity: 1;
+}
+
+.legacy-button span {
+    position: relative;
+    z-index: 1;
+}
+
+.legacy-image {
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: all 0.5s var(--transition-smooth);
+}
+
+.legacy-image:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.legacy-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--transition-smooth);
+}
+
+.legacy-image:hover img {
+    transform: scale(1.1);
+}
+
+/* Enhanced responsive design for biography section */
+@media (max-width: 1200px) {
+    .biography-section {
+        gap: calc(var(--spacing-unit) * 6);
+    }
+    
+    .biography-stats {
+        gap: calc(var(--spacing-unit) * 2);
+    }
+}
+
+@media (max-width: 992px) {
+    .biography-section {
+        grid-template-columns: 1fr;
+        gap: calc(var(--spacing-unit) * 6);
+        text-align: center;
+    }
+
+    .biography-image {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .biography-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .biography-container {
+        padding: calc(var(--spacing-unit) * 8) calc(var(--spacing-unit) * 3);
+    }
+
+    .biography-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: calc(var(--spacing-unit) * 2);
+    }
+
+    .stat-number {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .stat-label {
+        font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+    }
+}
+
+@media (max-width: 576px) {
+    .biography-stats {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+        margin: calc(var(--spacing-unit) * 4) auto 0;
+    }
+
+    .stat-item {
+        padding: calc(var(--spacing-unit) * 3);
+    }
+
+    .biography-container {
+        padding: calc(var(--spacing-unit) * 6) calc(var(--spacing-unit) * 2);
+    }
+
+    .biography-section {
+        gap: calc(var(--spacing-unit) * 4);
+    }
+
+    .biography-image {
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .biography-content h2 {
+        margin-bottom: calc(var(--spacing-unit) * 3);
+    }
+
+    .biography-content p {
+        margin-bottom: calc(var(--spacing-unit) * 3);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+    }
+}
+
+/* Update Spiritual Legacy Section responsive styles */
+@media (max-width: 992px) {
+    .legacy-section {
+        grid-template-columns: 1fr;
+        gap: calc(var(--spacing-unit) * 6);
+        text-align: center;
+    }
+
+    .legacy-section .legacy-content {
+        order: 1; /* Keep content on top */
+    }
+
+    .legacy-section .legacy-image {
+        order: 2; /* Move image to bottom */
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .legacy-button {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .legacy-section {
+        padding: calc(var(--spacing-unit) * 6) 0;
+        gap: calc(var(--spacing-unit) * 4);
+    }
+
+    .legacy-section h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .legacy-section p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .legacy-section {
+        padding: calc(var(--spacing-unit) * 4) 0;
+        gap: calc(var(--spacing-unit) * 3);
+    }
+
+    .legacy-section .legacy-image {
+        max-width: 100%;
+    }
+} 

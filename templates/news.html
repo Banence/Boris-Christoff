@@ -1,0 +1,91 @@
+{% include '/includes/head.html' %}
+<link rel="stylesheet" href="/static/styles/news.css">
+<script src="/static/scripts/animations.js" defer></script>
+<script src="/static/scripts/news.js" defer></script>
+<title>{{ Title }}</title>
+</head>
+<body class="news-page">
+    {% include '/includes/navbar.html' %}
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Новини</h1>
+            <p>Останете информирани за нашите последни новини</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="hero-overlay"></div>
+        <img src="/static/images/newssection.jpg" alt="News Hero" class="hero-image">
+    </div>
+
+    <section class="news-section">
+        <div class="section-title-wrapper">
+            <h2 class="section-title fade-in">Последни новини</h2>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="news-grid">
+            {% for news in all_news %}
+            <article class="news-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 50 }}">
+                <div class="news-image-wrapper">
+                    <img src="{{ news.image }}" alt="{{ news.title }}" loading="lazy">
+                    <div class="image-overlay"></div>
+                    {% if news.featured %}
+                    <span class="featured-tag">Featured</span>
+                    {% endif %}
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <time datetime="{{ news.date.strftime('%Y-%m-%d') }}">
+                            <i class="far fa-calendar-alt"></i>
+                            {{ news.date.strftime('%B %d, %Y') }}
+                        </time>
+                        {% if news.emoji %}
+                        <span class="news-category">{{ news.emoji }}</span>
+                        {% endif %}
+                    </div>
+                    <h3>{{ news.title }}</h3>
+                    <p>{{ news.description }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="modal-overlay">
+        <div class="news-modal">
+            <button class="close-modal" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-content">
+                <div class="modal-image">
+                    <img id="modal-news-image" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modal-news-title"></h2>
+                    <div class="modal-meta">
+                        <time id="modal-news-date">
+                            <i class="far fa-calendar-alt"></i>
+                            <span></span>
+                        </time>
+                    </div>
+                    <div class="modal-description" id="modal-news-description"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include '/includes/footer.html' %}
+    
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            offset: 100,
+            once: true
+        });
+    </script>
+</body>
+</html> 

@@ -9,16 +9,20 @@
     
     <section class="hero">
         <div class="hero-content">
-            <h1 class="fade-in">Boris Christoff Foundation</h1>
-            <p class="slide-in-left">Experience the passion and artistry of classical music</p>
-            <a href="/boris-christoff" class="cta-button fade-in">Who is Boris Christoff?</a>
+            <h1>Фондация Борис Христов</h1>
+            <p>Преживявания с класическа музика</p>
+            <a href="/boris-christoff" class="cta-button">Кой е Борис Христов?</a>
+        </div>
+        <div class="scroll-indicator">
+            <span class="scroll-text">Scroll</span>
+            <div class="scroll-line"></div>
         </div>
         <div class="hero-overlay"></div>
         <img src="/static/images/lascala.jpg" alt="Hero Image" class="hero-image">
     </section>
 
     <section class="news-section">
-        <h2 class="section-title fade-in">Featured News</h2>
+        <h2 class="section-title fade-in">Препоръчани новини</h2>
         <div class="news-container">
             {% if featured_news_items %}
             <div class="featured-news-grid">
@@ -36,11 +40,11 @@
                             <time class="news-date" datetime="{{ news.date.strftime('%Y-%m-%d') }}">
                                 {{ news.date.strftime('%B %d, %Y') }}
                             </time>
-                            <span class="featured-badge">Featured</span>
+                            <span class="featured-badge">Препоръчано</span>
                         </div>
                         <h3>{{ news.title }}</h3>
                         <p>{{ news.description }}</p>
-                        <a href="/news/{{ news.id }}" class="read-more">Read Full Article</a>
+                        <a href="/news" class="read-more">Виж Повече</a>
                     </div>
                 </article>
                 {% endfor %}

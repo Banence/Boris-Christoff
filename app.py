@@ -709,6 +709,20 @@ def add_news():
 def boris_christoff():
     return render_template('boris-christoff.html', Title='Boris Christoff')
 
+@app.route('/news')
+def news():
+    try:
+        # Get all news items ordered by date (most recent first)
+        all_news = News.query.order_by(News.date.desc()).all()
+        
+        return render_template('news.html', 
+                             Title='News - Boris Christoff Foundation',
+                             all_news=all_news)
+    except Exception as e:
+        app.logger.error(f"Error in news route: {str(e)}")
+        flash('An error occurred while loading the news.', 'error')
+        return redirect(url_for('index'))
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

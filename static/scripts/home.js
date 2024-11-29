@@ -18,12 +18,37 @@ buttons.forEach(button => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Intersection Observer for fade-in animations
+    // Add loaded class to hero for image animation
+    setTimeout(() => {
+        document.querySelector('.hero').classList.add('loaded');
+    }, 100);
+
+    // Parallax effect for hero image
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const heroImage = document.querySelector('.hero-image');
+        heroImage.style.transform = `translate3d(0, ${scrolled * 0.4}px, 0) scale(1.1)`;
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Intersection Observer for animations
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Unobserve after animation
                 observer.unobserve(entry.target);
             }
         });
@@ -32,34 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
         rootMargin: '50px'
     });
 
-    // Observe all fade-in elements
-    document.querySelectorAll('.fade-in, .featured-news-card, .hero-content > *').forEach((el) => {
+    // Observe elements
+    document.querySelectorAll('.fade-in, .featured-news-card').forEach((el) => {
         observer.observe(el);
     });
-
-    // Add stagger delay to hero content children
-    document.querySelectorAll('.hero-content > *').forEach((el, index) => {
-        el.style.transitionDelay = `${index * 200}ms`;
-    });
-
-    function updateHeroHeight() {
-        const navbar = document.querySelector('.navbar');
-        if (navbar) {
-            const navbarHeight = navbar.offsetHeight;
-            document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
-        }
-    }
-
-    // Initial calculation
-    updateHeroHeight();
-
-    // Update on window resize
-    window.addEventListener('resize', updateHeroHeight);
-
-    // Update when navbar changes (e.g., mobile menu toggle)
-    const navbarObserver = new ResizeObserver(updateHeroHeight);
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-        navbarObserver.observe(navbar);
-    }
 });

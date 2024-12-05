@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/static/styles/home.css">
 <script src="/static/scripts/home.js" defer></script>
 <script src="/static/scripts/animations.js" defer></script>
+<script src="/static/scripts/projects.js" defer></script>
 <title>{{ Title }}</title>
 </head>
 <body class="is-index">
@@ -21,35 +22,153 @@
         <img src="/static/images/lascala.jpg" alt="Hero Image" class="hero-image">
     </section>
 
-    <section class="news-section">
-        <h2 class="section-title fade-in">Препоръчани новини</h2>
-        <div class="news-container">
-            {% if featured_news_items %}
-            <div class="featured-news-grid">
-                {% set shuffled_news = featured_news_items | shuffle %}
-                {% for news in shuffled_news %}
-                <article class="featured-news-card fade-in">
-                    <div class="news-image-container">
-                        <img src="{{ news.image }}" alt="{{ news.title }}" loading="lazy">
-                    </div>
-                    <div class="news-content">
-                        <div class="news-meta">
-                            {% if news.emoji %}
-                            <span class="news-icon">{{ news.emoji }}</span>
-                            {% endif %}
-                            <time class="news-date" datetime="{{ news.date.strftime('%Y-%m-%d') }}">
-                                {{ news.date.strftime('%B %d, %Y') }}
-                            </time>
-                            <span class="featured-badge">Препоръчано</span>
+    <section class="project-showcase">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                <span class="gradient-text">Нашите Проекти</span>
+            </h2>
+            <div class="project-container">
+                <div class="project-slides-wrapper">
+                    <div class="project-slide active" data-index="0">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="/static/images/Baner-2560-x-1440-pixels-1024x576.jpg" alt="Спорт срещу агресия">
+                            </div>
+                            <div class="project-content">
+                                <div class="content-wrapper">
+                                    <h3 class="project-title">Спорт срещу агресия</h3>
+                                    <p class="project-description">
+                                        Проект, насочен към намаляване на агресията сред младежите чрез спортни дейности и музича терапия.
+                                    </p>
+                                    <div class="project-meta">
+                                        <span class="project-date">2024</span>
+                                        <a href="/projects/sport-against-aggression" class="btn">Научете повече</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h3>{{ news.title }}</h3>
-                        <p>{{ news.description }}</p>
-                        <a href="/news" class="read-more">Виж Повече</a>
                     </div>
-                </article>
-                {% endfor %}
+                    
+                    <div class="project-slide" data-index="1">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="/static/images/Logo-TOGETHER-final-10082023-1024x510.png" alt="Заедно">
+                            </div>
+                            <div class="project-content">
+                                <div class="content-wrapper">
+                                    <h3 class="project-title">Заедно</h3>
+                                    <p class="project-description">
+                                        Инициатива за създаване на общност чрез музика и спорт, обединяваща различни социални групи.
+                                    </p>
+                                    <div class="project-meta">
+                                        <span class="project-date">2024</span>
+                                        <a href="/projects/together" class="btn">Научете повече</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-navigation">
+                    <button class="nav-button prev-button" aria-label="Previous project">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="project-indicators">
+                        <button class="indicator active" data-index="0"></button>
+                        <button class="indicator" data-index="1"></button>
+                    </div>
+                    <button class="nav-button next-button" aria-label="Next project">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
-            {% endif %}
+        </div>
+    </section>
+
+    <section class="foundation-info">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                <span class="gradient-text">За Фондацията</span>
+            </h2>
+            <div class="info-grid">
+                <!-- Mission Card -->
+                <div class="info-card main-card fade-in">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="info-title">Мисия</h3>
+                        <p class="info-text">
+                            Съхраняване на творческото наследство на Борис Христов и подпомагане на талантливи артисти чрез културни събития с висока художествена стойност.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Leadership Card -->
+                <div class="info-card slide-in-left">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="info-title">Екип</h3>
+                        <p class="info-text">
+                            Ръководен от Стоян Бончев, Николай Ангелов и Маестро Бойко Цветанов – първият ученик на Борис Христов.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Activities Card -->
+                <div class="info-card slide-in-right">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="info-title">Дейности</h3>
+                        <p class="info-text">
+                            Организиране на концерти, майсторски класове и семинари за развитието на български артисти.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="donation-cta">
+        <div class="cta-background">
+            <div class="cta-overlay"></div>
+            <img src="/static/images/newssection.jpg" alt="Support Classical Music" class="cta-image">
+        </div>
+        <div class="cta-content">
+            <div class="cta-text-wrapper">
+                <h2 class="cta-title">
+                    <span class="highlight">Подкрепете</span> Класическата Музика
+                </h2>
+                <p class="cta-description">
+                    Вашата подкрепа помага за съхраняването на културното наследство
+                </p>
+            </div>
+            <div class="cta-button-wrapper">
+                <a href="/donate" class="donation-button">
+                    <span class="button-text">Дарете Сега</span>
+                    <span class="button-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </a>
+            </div>
         </div>
     </section>
     

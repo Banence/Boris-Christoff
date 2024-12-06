@@ -849,7 +849,7 @@ html {
 }
 
 .cta-title {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2rem, 4vw, 4rem) !important;
     color: white;
     margin-bottom: 1rem;
     line-height: 1.2;
@@ -893,7 +893,7 @@ html {
 }
 
 .donation-button {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 1rem;
     padding: 1rem 2rem;
@@ -908,6 +908,7 @@ html {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .donation-button::before {
@@ -962,12 +963,19 @@ html {
     }
 
     .cta-description {
-        margin: 0 auto 2rem;
+        margin: 0 auto 1.5rem;
     }
 
     .donation-button {
-        padding: 0.875rem 1.75rem;
+        padding: 0.875rem 1.5rem;
         font-size: 1rem;
+        margin: 0 auto;
+    }
+
+    .cta-button-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 }
 
@@ -977,12 +985,14 @@ html {
     }
 
     .cta-content {
-        gap: 1.5rem;
+        gap: 1rem;
     }
 
     .donation-button {
-        width: 100%;
-        justify-content: center;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+        width: auto;
+        max-width: 80%;
     }
 }
 

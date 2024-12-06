@@ -10,12 +10,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const toggleMobileMenu = (force = null) => {
-        const isActive = force !== null ? force : mobileNav.classList.toggle('active');
+        const isActive = force !== null ? force : !mobileNav.classList.contains('active');
+        
+        // Add/remove classes
         mobileNav.classList.toggle('active', isActive);
         mobileNavOverlay.classList.toggle('active', isActive);
         mobileMenuBtn.classList.toggle('active', isActive);
+        document.body.classList.toggle('mobile-nav-active', isActive);
+        
+        // Update ARIA attributes
         mobileMenuBtn.setAttribute('aria-expanded', isActive);
-        document.body.style.overflow = isActive ? 'hidden' : '';
     };
 
     // Handle window resize
@@ -41,14 +45,76 @@ document.addEventListener('DOMContentLoaded', function () {
     mobileNavOverlay.addEventListener('click', () => toggleMobileMenu(false));
 
     document.addEventListener('click', (e) => {
-        if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileNav.classList.contains('active')) {
+        if (mobileNav.classList.contains('active') && 
+            !mobileNav.contains(e.target) && 
+            !mobileMenuBtn.contains(e.target)) {
             toggleMobileMenu(false);
         }
     });
 
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+        if (e.key === 'Escape') {
             toggleMobileMenu(false);
+            
+            // Close all dropdowns
+            document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
         }
     });
+
+    // Mobile dropdown functionality
+    const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
+    
+    mobileDropdowns.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.mobile-dropdown-trigger');
+        
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Close other dropdowns
+            mobileDropdowns.forEach(other => {
+                if (other !== dropdown) {
+                    other.classList.remove('active');
+                }
+            });
+            
+            // Toggle current dropdown
+            dropdown.classList.toggle('active');
+        });
+    });
+
+    // Close mobile dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.mobile-dropdown')) {
+            mobileDropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+
+    // Close mobile dropdowns when mobile menu is closed
+    const closeMobileDropdowns = () => {
+        mobileDropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+    };
+
+    // Add dropdown closing to existing mobile menu toggle
+    const originalToggleMobileMenu = toggleMobileMenu;
+    toggleMobileMenu = (force = null) => {
+        originalToggleMobileMenu(force);
+        if (force === false) {
+            closeMobileDropdowns();
+        }
+    };
+
+    // Prevent body scroll when mobile menu is open
+    document.body.addEventListener('touchmove', (e) => {
+        if (document.body.classList.contains('mobile-nav-active')) {
+            if (!mobileNav.contains(e.target)) {
+                e.preventDefault();
+            }
+        }
+    }, { passive: false });
 });

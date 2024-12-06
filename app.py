@@ -568,6 +568,14 @@ def edit_partner(partner_id):
 def boris_christoff():
     return render_template('boris-christoff.html', Title='Boris Christoff')
 
+@app.route('/projects/sport-against-aggression')
+def sport_against_aggression():
+    return render_template('projects/sport-against-aggression.html', Title='Спорт срещу агресия')
+
+@app.route('/projects/together')
+def together():
+    return render_template('projects/together.html', Title='Заедно')
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

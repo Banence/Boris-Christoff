@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sectionTitles.forEach(title => titleObserver.observe(title));
 
-    // Add intersection observer for story section animations
+    // Update the storyObserver to handle both sections
     const storyObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rootMargin: '50px'
     });
 
-    // Observe all story elements
+    // Observe all story and mission-vision elements
     document.querySelectorAll('.story-fade-up').forEach(element => {
         storyObserver.observe(element);
     });

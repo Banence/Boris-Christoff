@@ -1857,3 +1857,74 @@ html {
 .artists-grid .artist-card {
     transition-delay: calc(var(--item-index) * 0.1s) !important;
 }
+
+/* Add these styles for the two-card layout */
+.story-grid.two-cards {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 3rem;
+    padding: 0 2rem;
+}
+
+.story-grid.two-cards .story-card {
+    padding: 3rem;
+    height: 100%;
+}
+
+.story-grid.two-cards .card-title {
+    font-size: 2rem;
+    color: var(--color-primary-bg);
+    margin: 1.5rem 0;
+    font-weight: 700;
+    background: linear-gradient(45deg, #1a1a1a, var(--color-hover-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Responsive adjustments for two cards */
+@media (max-width: 992px) {
+    .story-grid.two-cards {
+        gap: 2rem;
+        padding: 0 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .story-grid.two-cards {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    .story-card {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .story-grid.two-cards {
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+
+    .mission-vision-section {
+        padding: 3rem 1rem;
+    }
+}
+
+/* Add container padding */
+.story-container {
+    padding: 0 1rem;
+}
+
+/* Ensure cards don't overlap */
+.story-card {
+    height: auto;
+    min-height: 300px;
+    margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}

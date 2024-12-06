@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, request, jsonify
+from flask import Flask, render_template, redirect, url_for, flash, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -35,7 +35,7 @@ csrf = CSRFProtect(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "login"
+login_manager.login_view = "getLogin"
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -63,15 +63,6 @@ class Event(db.Model):
     
     def __repr__(self):
         return f'<Event {self.name}>'
-
-class News(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    image = db.Column(db.String(200))
-    emoji = db.Column(db.String(50))
-    featured = db.Column(db.Boolean, default=False)
 
 class UploadPartnerForm(FlaskForm):
     name = StringField("Name", validators=[InputRequired(), Length(max=100)], 
@@ -111,24 +102,11 @@ class EventForm(FlaskForm):
     date = StringField('Date', validators=[DataRequired()], render_kw={"class": "input-primary", "type": "datetime-local"})
     submit = SubmitField('Upload Event', render_kw={"class": "btn", "style": "background-color: #f5494c;"})
 
-class NewsForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()], render_kw={"class": "input-primary"})
-    description = TextAreaField('Description', validators=[DataRequired()], render_kw={"class": "textarea-primary"})
-    emoji = StringField('Emoji', render_kw={"class": "input-primary", "placeholder": "📰"})
-    image = FileField('Image', render_kw={"class": "input-primary"})
-    featured = BooleanField('Feature this article')
-
 @app.route('/')
 def index():
-    featured_news_items = News.query.filter_by(featured=True).order_by(News.date.desc()).limit(3).all()
-    recent_news = News.query.order_by(News.date.desc()).limit(6).all()
-    upcoming_events = Event.query.filter(Event.date >= datetime.utcnow()).order_by(Event.date.asc()).limit(3).all()
     
     return render_template('index.html', 
-                         Title='Home',
-                         featured_news_items=featured_news_items,
-                         recent_news=recent_news,
-                         events=upcoming_events)
+                         Title='Home')
 
 @app.route('/who-we-are', methods=["GET"])
 def getManagementAndTeam():
@@ -179,8 +157,7 @@ def getRegister():
 @login_required
 def upload_partner():
     if not current_user.admin:
-        flash('Unauthorized access', 'error')
-        return redirect(url_for('getLogin'))
+        abort(403)
 
     form = UploadPartnerForm()
     
@@ -306,8 +283,7 @@ def getEvents():
 @login_required
 def upload_event():
     if not current_user.admin:
-        flash('Unauthorized access', 'error')
-        return redirect(url_for('getLogin'))
+        abort(403)
 
     form = EventForm()
     
@@ -425,94 +401,6 @@ def delete_event(event_id):
         db.session.rollback()
         return jsonify({'success': False, 'message': str(e)}), 500
 
-@app.route('/admin/news')
-@login_required
-def admin_news():
-    if not current_user.admin:
-        flash('You do not have permission to access this page', 'error')
-        return redirect(url_for('getLogin'))
-    news_items = News.query.order_by(News.date.desc()).all()
-    return render_template('admin/news.html', news=news_items)
-
-@app.route('/admin/news/edit/<int:news_id>', methods=['GET', 'POST'])
-@login_required
-def edit_news(news_id):
-    if not current_user.admin:
-        flash('You do not have permission to access this page', 'error')
-        return redirect(url_for('getLogin'))
-
-    news = News.query.get_or_404(news_id)
-    form = NewsForm()
-
-    if form.validate_on_submit():
-        try:
-            news.title = form.title.data
-            news.description = form.description.data
-            news.emoji = form.emoji.data
-            news.featured = form.featured.data
-
-            if form.image.data:
-                # Delete old image if it exists
-                if news.image and news.image.startswith('/static/files/uploaded_pictures/news/'):
-                    old_image_path = os.path.join(
-                        app.root_path,
-                        'static',
-                        'files',
-                        'uploaded_pictures',
-                        'news',
-                        os.path.basename(news.image)
-                    )
-                    if os.path.exists(old_image_path):
-                        os.remove(old_image_path)
-
-                # Save new image
-                image_path = save_uploaded_file(form.image.data, 'news')
-                if image_path:
-                    news.image = image_path
-
-            db.session.commit()
-            flash('News article updated successfully!', 'success')
-            return redirect(url_for('admin_news'))
-        except Exception as e:
-            db.session.rollback()
-            flash(f'Error updating news: {str(e)}', 'error')
-
-    # Pre-fill form with existing data
-    form.title.data = news.title
-    form.description.data = news.description
-    form.emoji.data = news.emoji
-    form.featured.data = news.featured
-    
-    return render_template('admin/edit_news.html', form=form, news=news)
-
-@app.route('/admin/news/delete/<int:news_id>', methods=['DELETE'])
-@login_required
-def delete_news(news_id):
-    if not current_user.admin:
-        return jsonify({'success': False, 'message': 'Unauthorized'}), 403
-
-    try:
-        news = News.query.get_or_404(news_id)
-        
-        # Delete associated image if it exists
-        if news.image and news.image.startswith('/static/files/uploaded_pictures/news/'):
-            image_path = os.path.join(
-                app.root_path,
-                'static',
-                'files',
-                'uploaded_pictures',
-                'news',
-                os.path.basename(news.image)
-            )
-            if os.path.exists(image_path):
-                os.remove(image_path)
-        
-        db.session.delete(news)
-        db.session.commit()
-        return jsonify({'success': True, 'message': 'News article deleted successfully'}), 200
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'success': False, 'message': str(e)}), 500
 
 def flash_errors(form):
     for field, errors in form.errors.items():
@@ -523,15 +411,12 @@ def flash_errors(form):
 @login_required
 def admin_dashboard():
     if not current_user.is_authenticated or current_user.admin != 1:
-        flash('You do not have permission to access this page', 'error')
-        return redirect(url_for('getLogin'))
+        abort(403)
     
-    news_count = News.query.count()
     events_count = Event.query.count()
     partners_count = Partners.query.count()
     
     return render_template('admin/dashboard.html',
-                         news_count=news_count,
                          events_count=events_count,
                          partners_count=partners_count,
                          user=current_user,
@@ -541,8 +426,7 @@ def admin_dashboard():
 @login_required
 def admin_events():
     if not current_user.admin:
-        flash('You do not have permission to access this page', 'error')
-        return redirect(url_for('getLogin'))
+        abort(403)
     events = Event.query.order_by(Event.id.desc()).all()
     return render_template('admin/events.html', events=events)
 
@@ -550,8 +434,7 @@ def admin_events():
 @login_required
 def admin_partners():
     if not current_user.admin:
-        flash('You do not have permission to access this page', 'error')
-        return redirect(url_for('getLogin'))
+        abort(403)
     partners = Partners.query.all()
     return render_template('admin/partners.html', partners=partners)
 
@@ -588,15 +471,22 @@ def add_partner():
 @app.errorhandler(404)
 def not_found_error(error):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return jsonify({'success': False, 'message': 'Not found'}), 404
-    return render_template('includes/404.html'), 404
+        return jsonify({'success': False, 'message': 'Page not found'}), 404
+    return render_template('includes/404.html', Title='Page Not Found'), 404
 
 @app.errorhandler(500)
 def internal_error(error):
     db.session.rollback()
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return jsonify({'success': False, 'message': 'Internal server error'}), 500
-    return render_template('includes/500.html'), 500
+    return render_template('includes/500.html', Title='Server Error'), 500
+
+@app.errorhandler(403)
+def forbidden_error(error):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return jsonify({'success': False, 'message': 'Unauthorized access'}), 403
+    flash('You do not have permission to access this page', 'error')
+    return redirect(url_for('getLogin'))
 
 @app.template_filter('shuffle')
 def shuffle_filter(seq):
@@ -673,55 +563,10 @@ def edit_partner(partner_id):
     
     return render_template('admin/edit_partner.html', form=form, partner=partner)
 
-@app.route('/admin/news/add', methods=['GET', 'POST'])
-@login_required
-def add_news():
-    if not current_user.admin:
-        flash('You do not have permission to access this page', 'error')
-        return redirect(url_for('getLogin'))
-
-    form = NewsForm()
-    if form.validate_on_submit():
-        try:
-            image_path = None
-            if form.image.data:
-                image_path = save_uploaded_file(form.image.data, 'news')
-
-            news = News(
-                title=form.title.data,
-                description=form.description.data,
-                emoji=form.emoji.data,
-                image=image_path,
-                featured=form.featured.data
-            )
-            
-            db.session.add(news)
-            db.session.commit()
-            flash('News article added successfully!', 'success')
-            return redirect(url_for('admin_news'))
-        except Exception as e:
-            db.session.rollback()
-            flash(f'Error adding news: {str(e)}', 'error')
-
-    return render_template('admin/add_news.html', form=form)
 
 @app.route('/boris-christoff')
 def boris_christoff():
     return render_template('boris-christoff.html', Title='Boris Christoff')
-
-@app.route('/news')
-def news():
-    try:
-        # Get all news items ordered by date (most recent first)
-        all_news = News.query.order_by(News.date.desc()).all()
-        
-        return render_template('news.html', 
-                             Title='News - Boris Christoff Foundation',
-                             all_news=all_news)
-    except Exception as e:
-        app.logger.error(f"Error in news route: {str(e)}")
-        flash('An error occurred while loading the news.', 'error')
-        return redirect(url_for('index'))
 
 if __name__ == '__main__':
     with app.app_context():

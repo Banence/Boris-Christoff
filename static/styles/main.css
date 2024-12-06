@@ -372,7 +372,7 @@ html {
 }
 
 .project-description {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-size: clamp(0.8rem, 1.8vw, 1.2rem);
     color: #666;
     margin-bottom: 2rem;
     line-height: 1.6;
@@ -382,14 +382,14 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .project-date {
-    font-size: clamp(0.8rem, 1.5vw, 1rem);
-    color: #888;
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
 }
 
 .project-navigation {
@@ -495,14 +495,15 @@ html {
     }
 
     .project-meta {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
-        gap: 0.75rem;
+        justify-content: center;
+        gap: 1rem;
     }
 
-    .project-meta .btn {
-        width: 100%;
-        text-align: center;
+    .project-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
     }
 }
 
@@ -718,11 +719,6 @@ html {
     
     .info-card {
         padding: 1.75rem;
-        text-align: center;
-    }
-    
-    .card-icon {
-        margin: 0 auto 1.5rem;
     }
 }
 
@@ -1077,5 +1073,78 @@ html {
     .contact-item {
         justify-content: center;
         text-align: center;
+    }
+}
+
+.project-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 1.5px solid var(--color-hover-secondary);
+    border-radius: 50px;
+    color: var(--color-hover-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-btn:hover {
+    background: var(--color-hover-secondary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 73, 76, 0.2);
+}
+
+.project-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.project-btn:hover svg {
+    transform: translateX(4px);
+}
+
+/* Update existing project-meta styles */
+.project-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.project-date {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .project-btn {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.9rem;
+    }
+    
+    .project-meta {
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-meta {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .project-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
     }
 }

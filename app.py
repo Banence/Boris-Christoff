@@ -5,12 +5,15 @@ from flask_wtf import FlaskForm
 from wtforms import FileField, StringField, PasswordField, SubmitField, HiddenField, TextAreaField, BooleanField
 from werkzeug.utils import secure_filename
 import os
-from wtforms.validators import InputRequired, Length, ValidationError, URL, DataRequired
+from wtforms.validators import InputRequired, Length, ValidationError, URL, DataRequired, Email
 from flask_bcrypt import Bcrypt
 from flask_wtf.file import FileAllowed
 from flask_wtf.csrf import CSRFProtect
 from datetime import datetime
 from random import shuffle
+from flask_mail import Mail, Message
+import pymysql
+pymysql.install_as_MySQLdb()
 
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
@@ -24,14 +27,24 @@ def create_upload_directories():
             os.makedirs(dir_path)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
+    f"@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
+)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'static/files/uploaded_pictures'
-app.config['SECRET_KEY'] = 'admin1234'
+app.config['SECRET_KEY'] = 'admin1234'  # You should use a secure secret key
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'your-email@gmail.com'  # Replace with your email
+app.config['MAIL_PASSWORD'] = 'your-app-password'     # Replace with your app password
 create_upload_directories()
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 csrf = CSRFProtect(app)
+mail = Mail(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -102,15 +115,26 @@ class EventForm(FlaskForm):
     date = StringField('Date', validators=[DataRequired()], render_kw={"class": "input-primary", "type": "datetime-local"})
     submit = SubmitField('Upload Event', render_kw={"class": "btn", "style": "background-color: #f5494c;"})
 
+class ContactForm(FlaskForm):
+    first_name = StringField('Първо Име', validators=[DataRequired(), Length(min=2, max=50)],
+                           render_kw={"class": "input-primary", "placeholder": "Въведете първо име"})
+    last_name = StringField('Фамилмо Име', validators=[DataRequired(), Length(min=2, max=50)],
+                          render_kw={"class": "input-primary", "placeholder": "Въведете фамилно име"})
+    email = StringField('Email', validators=[DataRequired(), Email()],
+                       render_kw={"class": "input-primary", "placeholder": "Въведете електронна поща"})
+    message = TextAreaField('Съобщение', validators=[DataRequired(), Length(min=10, max=1000)],
+                          render_kw={"class": "textarea-primary", "placeholder": "Въведете съобщение..."})
+    submit = SubmitField('Изпрати съобщение', render_kw={"class": "btn"})
+
 @app.route('/')
 def index():
     
     return render_template('index.html', 
-                         Title='Home')
+                         Title='Начало - Фондация Борис Христов')
 
 @app.route('/who-we-are', methods=["GET"])
 def getManagementAndTeam():
-    return render_template('whoWeAre.html', Title="Who We Are")
+    return render_template('whoWeAre.html', Title="Кои сме ние?")
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def getLogin():
@@ -201,7 +225,7 @@ def upload_partner():
 @app.route('/partners', methods=["GET"])
 def getPartners():
     partners = Partners.query.all()
-    return render_template('partners.html', Title="Partners", partners=partners)
+    return render_template('partners.html', Title="Партньори", partners=partners)
 
 @app.route('/admin/update-partner/<int:partner_id>', methods=['GET', 'PATCH'])
 @login_required
@@ -277,7 +301,7 @@ def getEvents():
         if event.picture:
             # Remove any leading slashes and ensure correct path
             event.picture = event.picture.lstrip('/')
-    return render_template("events.html", Title="Events", events=events)
+    return render_template("events.html", Title="Събития", events=events)
 
 @app.route('/admin/upload-event', methods=['GET', 'POST'])
 @login_required
@@ -566,7 +590,7 @@ def edit_partner(partner_id):
 
 @app.route('/boris-christoff')
 def boris_christoff():
-    return render_template('boris-christoff.html', Title='Boris Christoff')
+    return render_template('boris-christoff.html', Title='Борис Христов')
 
 @app.route('/projects/sport-against-aggression')
 def sport_against_aggression():
@@ -574,7 +598,33 @@ def sport_against_aggression():
 
 @app.route('/projects/together')
 def together():
-    return render_template('projects/together.html', Title='Заедно')
+    return render_template('projects/together.html', Title='Заедно - спорт и изкуство')
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    form = ContactForm()
+    if form.validate_on_submit():
+        try:
+            msg = Message('New Contact Form Submission',
+                        sender=app.config['MAIL_USERNAME'],
+                        recipients=[app.config['MAIL_USERNAME']])
+            
+            msg.body = f"""
+            New contact form submission:
+            
+            From: {form.first_name.data} {form.last_name.data}
+            Email: {form.email.data}
+            Message:
+            {form.message.data}
+            """
+            
+            mail.send(msg)
+            flash('Your message has been sent successfully!', 'success')
+            return redirect(url_for('contact'))
+        except Exception as e:
+            flash('An error occurred while sending your message. Please try again.', 'error')
+            
+    return render_template('contact.html', Title='Свържете се с нас', form=form)
 
 if __name__ == '__main__':
     with app.app_context():

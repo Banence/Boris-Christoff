@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Свържете се с нас{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <div class="contact-content">
+        <div class="contact-info">
+            <h1 class="contact-title">Свържете се с нас</h1>
+            <p class="contact-description">Ще се радваме да ни отговорите. Изпратете ни съобщение и ние ще ви отговорим възможно най-скоро.</p>
+            
+            <div class="contact-details">
+                <div class="contact-detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>София 1000, ул. „Алабин" № 42</span>
+                </div>
+                <div class="contact-detail-item">
+                    <i class="fas fa-phone"></i>
+                    <span>0887 511 599</span>
+                </div>
+                <div class="contact-detail-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>foundation@borischristoff.org</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+            <form method="POST" class="contact-form">
+                {{ form.hidden_tag() }}
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <span class="error">{{ form.first_name.errors[0] }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <span class="error">{{ form.last_name.errors[0] }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <span class="error">{{ form.email.errors[0] }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.message }}
+                    {% if form.message.errors %}
+                        <span class="error">{{ form.message.errors[0] }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.submit }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

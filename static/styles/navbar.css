@@ -24,6 +24,7 @@ body:not(.is-index) .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     gap: 6rem;
 }
 
@@ -86,14 +87,16 @@ body:not(.is-index) .navbar {
     cursor: pointer;
     padding: 0.5rem;
     z-index: 2000;
-    position: relative;
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* Burger icon */
 .mobile-menu-btn .burger,
 .mobile-menu-btn .burger::before,
 .mobile-menu-btn .burger::after {
-    display: block;
     width: 24px;
     height: 2px;
     background: white;
@@ -111,11 +114,13 @@ body:not(.is-index) .navbar {
 .mobile-menu-btn .burger::before {
     content: '';
     top: -8px;
+    left: 50%;
 }
 
 .mobile-menu-btn .burger::after {
     content: '';
     bottom: -8px;
+    left: 50%;
 }
 
 /* Active state */
@@ -250,11 +255,27 @@ body.is-index .navbar.scrolled {
     .navbar-container {
         padding: 0.5rem 1rem;
     }
+
+    .mobile-menu-btn {
+        right: 1rem;
+    }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
     .mobile-nav {
         width: 250px;
+    }
+
+    .navbar-container {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .mobile-menu-btn {
+        right: 0.75rem;
+    }
+
+    .nav-logo-img {
+        height: 70px;
     }
 }
 

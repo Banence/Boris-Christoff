@@ -1,69 +1,213 @@
-{% extends "base.html" %}
+{% include '/includes/head.html' %}
+<link rel="stylesheet" href="/static/styles/contact.css">
+<script src="/static/scripts/animations.js" defer></script>
+<title>{{ Title }}</title>
+</head>
+<body>
+    {% include '/includes/navbar.html' %}
 
-{% block title %}Свържете се с нас{% endblock %}
-
-{% block content %}
-<div class="contact-container">
-    <div class="contact-content">
-        <div class="contact-info">
-            <h1 class="contact-title">Свържете се с нас</h1>
-            <p class="contact-description">Ще се радваме да ни отговорите. Изпратете ни съобщение и ние ще ви отговорим възможно най-скоро.</p>
-            
-            <div class="contact-details">
-                <div class="contact-detail-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>София 1000, ул. „Алабин" № 42</span>
-                </div>
-                <div class="contact-detail-item">
-                    <i class="fas fa-phone"></i>
-                    <span>0887 511 599</span>
-                </div>
-                <div class="contact-detail-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>foundation@borischristoff.org</span>
+    <div class="contact-container">
+        <div class="contact-content">
+            <div class="contact-info">
+                <h1 class="contact-title">Свържете се с нас</h1>
+                <p class="contact-description">Ще се радваме да ни отговорите. Изпратете ни съобщение и ние ще ви отговорим възможно най-скоро.</p>
+                
+                <div class="contact-details">
+                    <div class="contact-detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>София 1000, ул. „Алабин" № 42</span>
+                    </div>
+                    <div class="contact-detail-item">
+                        <i class="fas fa-phone"></i>
+                        <span>0887 511 599</span>
+                    </div>
+                    <div class="contact-detail-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>foundation@borischristoff.org</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="contact-form-wrapper">
-            <form method="POST" class="contact-form">
-                {{ form.hidden_tag() }}
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        {{ form.first_name }}
-                        {% if form.first_name.errors %}
-                            <span class="error">{{ form.first_name.errors[0] }}</span>
-                        {% endif %}
-                    </div>
+            <div class="contact-form-wrapper">
+                <form method="POST" class="contact-form">
+                    {{ form.hidden_tag() }}
                     
+                    <div class="form-row">
+                        <div class="form-group">
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                                <span class="error">{{ form.first_name.errors[0] }}</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}
+                                <span class="error">{{ form.last_name.errors[0] }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        {{ form.last_name }}
-                        {% if form.last_name.errors %}
-                            <span class="error">{{ form.last_name.errors[0] }}</span>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <span class="error">{{ form.email.errors[0] }}</span>
                         {% endif %}
                     </div>
-                </div>
 
-                <div class="form-group">
-                    {{ form.email }}
-                    {% if form.email.errors %}
-                        <span class="error">{{ form.email.errors[0] }}</span>
-                    {% endif %}
-                </div>
+                    <div class="form-group">
+                        {{ form.message }}
+                        {% if form.message.errors %}
+                            <span class="error">{{ form.message.errors[0] }}</span>
+                        {% endif %}
+                    </div>
 
-                <div class="form-group">
-                    {{ form.message }}
-                    {% if form.message.errors %}
-                        <span class="error">{{ form.message.errors[0] }}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    {{ form.submit }}
-                </div>
-            </form>
+                    <div class="form-group">
+                        {{ form.submit }}
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %} 
+
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        <div class="flash-message-content">{{ message }}</div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% include '/includes/footer.html' %}
+
+    <!-- Scripts -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="/static/scripts/navbar.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbar = document.querySelector('.navbar');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const mobileNavOverlay = document.querySelector('.mobile-nav-overlay');
+
+            if (!navbar || !mobileMenuBtn || !mobileNav || !mobileNavOverlay) {
+                console.error('Required navbar elements are missing.');
+                return;
+            }
+
+            const toggleMobileMenu = (force = null) => {
+                const isActive = force !== null ? force : !mobileNav.classList.contains('active');
+                
+                // Add/remove classes
+                mobileNav.classList.toggle('active', isActive);
+                mobileNavOverlay.classList.toggle('active', isActive);
+                mobileMenuBtn.classList.toggle('active', isActive);
+                document.body.classList.toggle('mobile-nav-active', isActive);
+                
+                // Update ARIA attributes
+                mobileMenuBtn.setAttribute('aria-expanded', isActive);
+            };
+
+            // Handle window resize
+            const handleResize = () => {
+                if (window.innerWidth > 1290 && mobileNav.classList.contains('active')) {
+                    toggleMobileMenu(false);
+                }
+            };
+
+            window.addEventListener('resize', handleResize);
+
+            // Update transparent navbar handling
+            if (document.body.classList.contains('is-index') || document.body.classList.contains('who-we-are')) {
+                const handleScroll = () => {
+                    navbar.classList.toggle('scrolled', window.scrollY > 50);
+                };
+                window.addEventListener('scroll', handleScroll);
+                handleScroll();
+            }
+
+            // Event Listeners
+            mobileMenuBtn.addEventListener('click', () => toggleMobileMenu());
+            mobileNavOverlay.addEventListener('click', () => toggleMobileMenu(false));
+
+            document.addEventListener('click', (e) => {
+                if (mobileNav.classList.contains('active') && 
+                    !mobileNav.contains(e.target) && 
+                    !mobileMenuBtn.contains(e.target)) {
+                    toggleMobileMenu(false);
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    toggleMobileMenu(false);
+                    
+                    // Close all dropdowns
+                    document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+
+            // Mobile dropdown functionality
+            const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
+            
+            mobileDropdowns.forEach(dropdown => {
+                const trigger = dropdown.querySelector('.mobile-dropdown-trigger');
+                
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Close other dropdowns
+                    mobileDropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('active');
+                });
+            });
+
+            // Close mobile dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.mobile-dropdown')) {
+                    mobileDropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+
+            // Close mobile dropdowns when mobile menu is closed
+            const closeMobileDropdowns = () => {
+                mobileDropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            };
+
+            // Add dropdown closing to existing mobile menu toggle
+            const originalToggleMobileMenu = toggleMobileMenu;
+            toggleMobileMenu = (force = null) => {
+                originalToggleMobileMenu(force);
+                if (force === false) {
+                    closeMobileDropdowns();
+                }
+            };
+
+            // Prevent body scroll when mobile menu is open
+            document.body.addEventListener('touchmove', (e) => {
+                if (document.body.classList.contains('mobile-nav-active')) {
+                    if (!mobileNav.contains(e.target)) {
+                        e.preventDefault();
+                    }
+                }
+            }, { passive: false });
+        });
+    </script>
+</body>
+</html> 

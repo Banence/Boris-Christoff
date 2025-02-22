@@ -1,0 +1,388 @@
+/* Modern Contact Page Styles */
+.contact-container {
+    min-height: calc(100vh - 120px);
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 8rem 1.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background Animation */
+.contact-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 48%, rgba(245, 73, 76, 0.03) 50%, transparent 52%);
+    background-size: 20px 20px;
+    animation: backgroundShift 15s linear infinite;
+}
+
+@keyframes backgroundShift {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 40px; }
+}
+
+.contact-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Info Section */
+.contact-info {
+    padding: 1.5rem;
+    animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.contact-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.contact-description {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.contact-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    width: 100%;
+    text-align: left;
+}
+
+.contact-detail-item:nth-child(1) { animation-delay: 0.4s; }
+.contact-detail-item:nth-child(2) { animation-delay: 0.6s; }
+.contact-detail-item:nth-child(3) { animation-delay: 0.8s; }
+
+.contact-detail-item i {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    font-size: 1rem;
+}
+
+.contact-detail-item span {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    word-break: break-word;
+}
+
+.contact-detail-item:hover i {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* Form Section */
+.contact-form-wrapper {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    background: #f8f9fa;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    max-height: 250px;
+    resize: vertical;
+}
+
+.submit-btn {
+    background: var(--color-hover-secondary);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(245, 73, 76, 0.2);
+}
+
+.submit-btn:hover::before {
+    transform: translateX(100%);
+}
+
+/* Animations */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .contact-container {
+        padding: 7rem 2rem 4rem;
+    }
+    
+    .contact-content {
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .contact-content {
+        grid-template-columns: 1fr;
+        max-width: 650px;
+        gap: 2.5rem;
+    }
+
+    .contact-form-wrapper {
+        padding: 2rem;
+    }
+    
+    .contact-info {
+        text-align: center;
+    }
+    
+    .contact-details {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-container {
+        padding: 6rem 1.5rem 3rem;
+        min-height: auto;
+    }
+
+    .contact-content {
+        gap: 2rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 0.9rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .contact-form-wrapper {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-container {
+        padding: 5rem 1rem 2rem;
+    }
+
+    .contact-content {
+        gap: 1.5rem;
+    }
+
+    .contact-form-wrapper {
+        padding: 1.25rem;
+        border-radius: 15px;
+    }
+
+    .contact-form {
+        gap: 1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        border-radius: 8px;
+    }
+
+    .form-group textarea {
+        min-height: 100px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 0.9rem;
+        font-size: 1rem;
+    }
+}
+
+/* Fix for very small screens */
+@media (max-width: 360px) {
+    .contact-container {
+        padding: 4.5rem 0.75rem 1.5rem;
+    }
+
+    .contact-form-wrapper {
+        padding: 1rem;
+    }
+
+    .contact-title {
+        font-size: 1.5rem;
+    }
+
+    .contact-description {
+        font-size: 0.85rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Error message styling */
+.error {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* Flash message adjustments */
+@media (max-width: 768px) {
+    .flash-messages {
+        left: 1rem;
+        right: 1rem;
+        top: 1rem;
+    }
+}
+
+/* Flash Messages Enhancement */
+.flash-messages {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+}
+
+.flash-message {
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    animation: slideInRight 0.5s ease forwards, fadeOut 0.5s ease forwards 5s;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.flash-message.success {
+    border-left: 4px solid #10B981;
+}
+
+.flash-message.error {
+    border-left: 4px solid #EF4444;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* Fix flash messages for mobile */
+@media (max-width: 768px) {
+    .flash-messages {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+
+    .flash-message {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+} 

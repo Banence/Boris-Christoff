@@ -1357,3 +1357,142 @@ html {
         font-size: 1rem;
     }
 }
+
+/* Flash Messages Container */
+.flash-messages {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    width: 90%;
+}
+
+/* Individual Flash Message */
+.flash-message {
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease forwards 5s;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Message types */
+.flash-message.success {
+    border-left: 4px solid #10B981;
+}
+
+.flash-message.error {
+    border-left: 4px solid #EF4444;
+}
+
+.flash-message.warning {
+    border-left: 4px solid #F59E0B;
+}
+
+/* Message icon */
+.flash-message::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+
+.flash-message.success::before {
+    content: "\f00c";
+    color: #10B981;
+}
+
+.flash-message.error::before {
+    content: "\f071";
+    color: #EF4444;
+}
+
+.flash-message.warning::before {
+    content: "\f017";
+    color: #F59E0B;
+}
+
+/* Message text */
+.flash-message-content {
+    flex: 1;
+    font-size: 0.95rem;
+    color: #1F2937;
+}
+
+/* Progress bar */
+.flash-message::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: currentColor;
+    animation: progress 5s linear forwards;
+}
+
+.flash-message.success::after {
+    background: #10B981;
+}
+
+.flash-message.error::after {
+    background: #EF4444;
+}
+
+.flash-message.warning::after {
+    background: #F59E0B;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+@keyframes progress {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0%;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .flash-messages {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+    }
+    
+    .flash-message {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+    }
+}

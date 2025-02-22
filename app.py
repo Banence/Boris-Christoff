@@ -9,11 +9,32 @@ from wtforms.validators import InputRequired, Length, ValidationError, URL, Data
 from flask_bcrypt import Bcrypt
 from flask_wtf.file import FileAllowed
 from flask_wtf.csrf import CSRFProtect
-from datetime import datetime
+from datetime import datetime, timedelta
 from random import shuffle
 from flask_mail import Mail, Message
 import pymysql
+from flask_migrate import Migrate
+from flask import session
+from email_validator import validate_email, EmailNotValidError
 pymysql.install_as_MySQLdb()
+
+def init_db():
+    try:
+        # Connect to MySQL server without selecting a database
+        connection = pymysql.connect(
+            host=os.getenv('DB_HOST', 'localhost'),
+            user=os.getenv('DB_USER', 'root'),
+            password=os.getenv('DB_PASSWORD', 'ScionxB2007')
+        )
+        
+        with connection.cursor() as cursor:
+            # Create database if it doesn't exist
+            cursor.execute(f"CREATE DATABASE IF NOT EXISTS {os.getenv('DB_NAME', 'borischristoff_db')} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
+            
+        connection.close()
+        
+    except Exception as e:
+        print(f"Error initializing database: {e}")
 
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
@@ -27,21 +48,29 @@ def create_upload_directories():
             os.makedirs(dir_path)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = (
-    f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
-    f"@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
-)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:ScionxB2007@localhost:3306/borischristoff_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_recycle': 280,
+    'pool_timeout': 20,
+    'pool_size': 10,
+    'max_overflow': 5
+}
 app.config['UPLOAD_FOLDER'] = 'static/files/uploaded_pictures'
 app.config['SECRET_KEY'] = 'admin1234'  # You should use a secure secret key
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'your-email@gmail.com'  # Replace with your email
-app.config['MAIL_PASSWORD'] = 'your-app-password'     # Replace with your app password
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'your-email@gmail.com'  # Replace with your actual email
+app.config['MAIL_PASSWORD'] = 'your-app-password'     # Replace with your actual app password
+app.config['MAIL_DEFAULT_SENDER'] = 'your-email@gmail.com'  # Replace with your email
+app.config['MAIL_MAX_EMAILS'] = 5
+app.config['MAIL_ASCII_ATTACHMENTS'] = False
 create_upload_directories()
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 csrf = CSRFProtect(app)
 mail = Mail(app)
@@ -55,23 +84,23 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False, unique=True)
-    password = db.Column(db.String(80), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(20, collation='utf8mb4_unicode_ci'), nullable=False, unique=True)
+    password = db.Column(db.String(255, collation='utf8mb4_unicode_ci'), nullable=False)
     admin = db.Column(db.Integer, nullable=False, default=0)
 
 class Partners(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    website = db.Column(db.String(200), nullable=False)
-    logo = db.Column(db.String(200))
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(100, collation='utf8mb4_unicode_ci'), nullable=False)
+    website = db.Column(db.String(200, collation='utf8mb4_unicode_ci'), nullable=False)
+    logo = db.Column(db.String(200, collation='utf8mb4_unicode_ci'))
 
 class Event(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    summary = db.Column(db.String(200))
-    description = db.Column(db.Text)
-    picture = db.Column(db.String(100))
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(100, collation='utf8mb4_unicode_ci'), nullable=False)
+    summary = db.Column(db.String(200, collation='utf8mb4_unicode_ci'))
+    description = db.Column(db.Text(collation='utf8mb4_unicode_ci'))
+    picture = db.Column(db.String(100, collation='utf8mb4_unicode_ci'))
     date = db.Column(db.DateTime, default=datetime.utcnow)
     
     def __repr__(self):
@@ -116,21 +145,34 @@ class EventForm(FlaskForm):
     submit = SubmitField('Upload Event', render_kw={"class": "btn", "style": "background-color: #f5494c;"})
 
 class ContactForm(FlaskForm):
-    first_name = StringField('Първо Име', validators=[DataRequired(), Length(min=2, max=50)],
-                           render_kw={"class": "input-primary", "placeholder": "Въведете първо име"})
-    last_name = StringField('Фамилмо Име', validators=[DataRequired(), Length(min=2, max=50)],
-                          render_kw={"class": "input-primary", "placeholder": "Въведете фамилно име"})
-    email = StringField('Email', validators=[DataRequired(), Email()],
-                       render_kw={"class": "input-primary", "placeholder": "Въведете електронна поща"})
-    message = TextAreaField('Съобщение', validators=[DataRequired(), Length(min=10, max=1000)],
-                          render_kw={"class": "textarea-primary", "placeholder": "Въведете съобщение..."})
-    submit = SubmitField('Изпрати съобщение', render_kw={"class": "btn"})
+    first_name = StringField('Първо Име', 
+        validators=[DataRequired(), Length(min=2, max=50)],
+        render_kw={"class": "input-primary", "placeholder": "Въведете първо име"}
+    )
+    last_name = StringField('Фамилно Име', 
+        validators=[DataRequired(), Length(min=2, max=50)],
+        render_kw={"class": "input-primary", "placeholder": "Въведете фамилно име"}
+    )
+    email = StringField('Email', 
+        validators=[
+            DataRequired(),
+            Email(message='Моля, въведете валиден email адрес')
+        ],
+        render_kw={"class": "input-primary", "placeholder": "Въведете електронна поща"}
+    )
+    message = TextAreaField('Съобщение', 
+        validators=[DataRequired(), Length(min=10, max=1000)],
+        render_kw={"class": "textarea-primary", "placeholder": "Въведете съобщение..."}
+    )
+    submit = SubmitField('Изпрати съобщение', 
+        render_kw={"class": "btn"}
+    )
 
 @app.route('/')
 def index():
     
     return render_template('index.html', 
-                         Title='Начало - Фондация Борис Христов')
+                         Title='Начало - Фондация Бори Христов')
 
 @app.route('/who-we-are', methods=["GET"])
 def getManagementAndTeam():
@@ -600,33 +642,68 @@ def sport_against_aggression():
 def together():
     return render_template('projects/together.html', Title='Заедно - спорт и изкуство')
 
+def can_send_email():
+    """Check if enough time has passed since the last email was sent"""
+    last_email_time = session.get('last_email_time')
+    if last_email_time:
+        last_email_time = datetime.fromisoformat(last_email_time)
+        time_passed = datetime.now() - last_email_time
+        # Return remaining wait time in minutes, or None if can send
+        if time_passed < timedelta(minutes=5):
+            return 5 - int(time_passed.total_seconds() / 60)
+    return None
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
         try:
-            msg = Message('New Contact Form Submission',
-                        sender=app.config['MAIL_USERNAME'],
-                        recipients=[app.config['MAIL_USERNAME']])
+            # Check if user can send email
+            wait_time = can_send_email()
+            if wait_time:
+                flash(f'Моля изчакайте {wait_time} минути преди да изпратите ново съобщение.', 'warning')
+                return render_template('contact.html', Title='Свържете се с нас', form=form)
+
+            # Prepare email message
+            msg = Message(
+                subject='New Contact Form Submission',
+                recipients=[app.config['MAIL_USERNAME']],
+                body=f"""
+                New contact form submission:
+                
+                From: {form.first_name.data} {form.last_name.data}
+                Email: {form.email.data}
+                Message:
+                {form.message.data}
+                
+                Sent at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+                """,
+                sender=app.config['MAIL_DEFAULT_SENDER']
+            )
             
-            msg.body = f"""
-            New contact form submission:
-            
-            From: {form.first_name.data} {form.last_name.data}
-            Email: {form.email.data}
-            Message:
-            {form.message.data}
-            """
-            
+            # Send email
             mail.send(msg)
-            flash('Your message has been sent successfully!', 'success')
+            
+            # Store the time of successful email sending
+            session['last_email_time'] = datetime.now().isoformat()
+            
+            # Clear form data after successful submission
+            form.first_name.data = ''
+            form.last_name.data = ''
+            form.email.data = ''
+            form.message.data = ''
+            
+            flash('Вашето съобщение беше изпратено успешно! Благодарим Ви за обратната връзка.', 'success')
             return redirect(url_for('contact'))
+            
         except Exception as e:
-            flash('An error occurred while sending your message. Please try again.', 'error')
+            app.logger.error(f"Email sending error: {str(e)}")
+            flash('Възникна грешка при изпращането на съобщението. Моля, опитайте отново по-късно или се свържете с нас по друг начин.', 'error')
+            return render_template('contact.html', Title='Свържете се с нас', form=form)
             
     return render_template('contact.html', Title='Свържете се с нас', form=form)
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        init_db()  # Create database if it doesn't exist
     app.run(debug=True)
